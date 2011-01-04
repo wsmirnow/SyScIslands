@@ -1,0 +1,24 @@
+Land
+  -Frischwasser [true/false]
+  -Nahrung [0..maxGamePF] +=gameRegeneration
+  -(Größe) wird beim erstellen der Karte erfüllt
+  -Zugänglichkeit ???
+  -Gefahren ???
+  -Dorf [0..1]
+  -Holz??? [0..maxWoodPF] +=woodregeneration
+
+Agenten
+  -Hafenbauer
+  -Schiffsbauer
+  -Jäger
+  -Bauern
+  -Kooperation unter einander (durch ein Dorf realisierbar ?!)
+
+Schiffe
+  -Agenten [1..inf]
+  -Resourcen (Handel/Dörfer erbauen)
+
+Dorf
+  -Agenten [1..inf]
+  -Resourcen (unterteilen)
+

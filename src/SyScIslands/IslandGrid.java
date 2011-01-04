@@ -1,7 +1,6 @@
 package SyScIslands;
 import eawag.grid.Grid;
 
-
 public class IslandGrid extends Grid {
 	
 	public float maxGamePF = 10f;
