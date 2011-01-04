@@ -8,17 +8,17 @@
   fin = 10
   max = 10
   nsel = (java.lang.String[]
-    "IslandGrid")
+    "Explorer")
   nexp = (java.lang.String[]
     "_root")
   simulatorHeight = 600
   simulatorWidth = 900
   errorDividerLocation = 422
-  treeDividerLocation = 120
+  treeDividerLocation = 286
   descriptionDividerLocation = 300
   showDescription = false
   hidetools = false
-  showform = false
+  showform = true
   hidetree = false
   hideerror = false
   hideexec = false
