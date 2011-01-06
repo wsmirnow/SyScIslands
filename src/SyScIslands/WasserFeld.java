@@ -1,6 +1,6 @@
 package SyScIslands;
 
-public class IslandFieldWater extends IslandField {
+public class WasserFeld extends Feld {
 	
 	public void condition() {
 		super.condition();
