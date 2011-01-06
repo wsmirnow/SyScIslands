@@ -33,6 +33,15 @@ public class Karte extends Grid {
 		}
 	}
 	
+	/**
+	 * Sucht rekursiv nach direkt benachbaten LandFeldern, 
+	 * die noch zu keiner Insel gehoeren und fuegt sie der Insel hinzu.
+	 * Dieser Vorgang wird so lange durchgefuehrt, 
+	 * bis keine Insel-freien Nachbarfelder mehr da sind.
+	 * 
+	 * @param insel Insel, welche um weitere Landfelder wachsen soll
+	 * @param feld bei welchem die Nachbarn gesucht werden sollen
+	 */
 	void sucheLandNachbarn(Insel insel, LandFeld feld) {
 		int[] dx = MOORE_DX;
 		int[] dy = MOORE_DX;
