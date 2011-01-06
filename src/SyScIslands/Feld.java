@@ -2,7 +2,7 @@ package SyScIslands;
 
 import eawag.grid.Bug;
 
-public class IslandField extends Bug {
+public class Feld extends Bug {
 	
 	boolean init = true;
 	
