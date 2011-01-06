@@ -2,13 +2,13 @@
   encoding = "cvid"
   content = "video.quicktime"
   quality = 0.5
-  gensym = 3057
+  gensym = 3058
   stepPlay = 40
   refreshSeek = 40
   fin = 10
   max = 10
   nsel = (java.lang.String[]
-    "Explorer")
+    "IslandGrid")
   nexp = (java.lang.String[]
     "_root")
   simulatorHeight = 600
@@ -18,7 +18,7 @@
   descriptionDividerLocation = 300
   showDescription = false
   hidetools = false
-  showform = true
+  showform = false
   hidetree = false
   hideerror = false
   hideexec = false
@@ -3507,7 +3507,7 @@ IslandGrid
         IslandFieldWater1596
         IslandFieldWater1595
         IslandFieldWater1594
-        IslandFieldWater1593
+        Bug3057
         IslandFieldWater1592
         IslandFieldWater1591
         IslandFieldWater1590
@@ -13248,18 +13248,6 @@ IslandGrid
     flyer = false
     z = 1
     y = 5
-    x = 18
-    depict = Water
-    init = true)
-    _BEGIN_
-    _END_
-  IslandFieldWater1593
-  (SyScIslands.IslandFieldWater
-    active = true
-    randomize = false
-    flyer = false
-    z = 1
-    y = 6
     x = 18
     depict = Water
     init = true)
@@ -37254,6 +37242,17 @@ IslandGrid
     wood = 0.0
     game = 0.0
     village = ())
+    _BEGIN_
+    _END_
+  Bug3057
+  (eawag.grid.Bug
+    active = true
+    randomize = false
+    flyer = false
+    z = 1
+    y = 6
+    x = 18
+    depict = Explorer)
     _BEGIN_
     _END_
   _END_
