@@ -65,9 +65,16 @@ public class Insel extends Swarm {
 	}
 
 	private void regenerateResorces() {
+
 		curHolz += karte.holzReg;
+		if (curHolz > karte.holzMax)
+			curHolz = karte.holzMax;
 		curWild += karte.wildReg;
+		if (curWild > karte.wildMax)
+			curWild = karte.wildMax;
 		curKorn += karte.kornReg;
+		if (curKorn > karte.kornMax)
+			curKorn = karte.kornMax;
 	}
 	
 	public void setDorf(Dorf dorf) throws IllegalAccessException {
