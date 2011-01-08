@@ -10,9 +10,8 @@
   nsel = (java.lang.String[]
     "Karte")
   nexp = (java.lang.String[]
-    "_root"
     "Depictions"
-    "Depictions")
+    "_root")
   simulatorHeight = 600
   simulatorWidth = 900
   errorDividerLocation = 422
@@ -5136,9 +5135,7 @@ Karte
         WasserFeld0)))
   zsize = 2
   ysize = 50
-  xsize = 50
-  zugaenglichkeitMax = 10
-  zugaenglichkeitMin = 1)
+  xsize = 50)
   _BEGIN_
   WasserFeld2499
   (SyScIslands.WasserFeld
@@ -35430,14 +35427,10 @@ Depictions
   Schiff
   (eawag.grid.Depiction
     active = true
-    clazz = #eawag.grid.Depiction
+    clazz = #SyScIslands.Schiff
     bits = (byte[][]
       (byte[]
-        12
-        12)
-      (byte[]
-        48
-        50))
+        12))
     hcell = 1
     wcell = 1)
   Wasser
