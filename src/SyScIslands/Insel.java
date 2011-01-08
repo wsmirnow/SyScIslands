@@ -1,7 +1,5 @@
 package SyScIslands;
 
-import java.util.Random;
-
 import eawag.model.Swarm;
 
 public class Insel extends Swarm {
@@ -13,6 +11,10 @@ public class Insel extends Swarm {
 	public boolean wasser = false;
 	public int curWild = 0;
 	public int curKorn = 0;
+
+	public int holzMax = 1;
+	public int wildMax = 1;
+	public int kornMax = 1;
 	/**
 	 * Zugaenglichkeit der Insel entscheidet ueber die Daeur der Berufsausuebung
 	 * (0=kurz, 1=lang)
@@ -21,7 +23,7 @@ public class Insel extends Swarm {
 
 	/** Erlaubt den zugriff auf die hinterlegte Werte */
 	protected Karte karte;
-	
+
 	protected Dorf dorf = null;
 
 	/** Insel Id */
@@ -34,9 +36,14 @@ public class Insel extends Swarm {
 
 		// Ressourcen Initalisierung
 		java.util.Random rnd = new java.util.Random();
-		this.curHolz = rnd.nextInt(karte.holzMax) + karte.holzMin;
-		this.curWild = rnd.nextInt(karte.wildMax) + karte.wildMin;
-		this.curKorn = rnd.nextInt(karte.kornMax) + karte.kornMin;
+		// Erstelle random max-Werte für Ressourcen
+		this.holzMax = rnd.nextInt(karte.holzMax) + karte.holzMin;
+		this.wildMax = rnd.nextInt(karte.wildMax) + karte.wildMin;
+		this.kornMax = rnd.nextInt(karte.kornMax) + karte.kornMin;
+
+		this.curHolz = rnd.nextInt(holzMax);
+		this.curWild = rnd.nextInt(wildMax);
+		this.curKorn = rnd.nextInt(kornMax);
 		if (rnd.nextFloat() > karte.Wasserwahrscheinlichkeit)
 			wasser = true;
 		zugaenglichkeit = rnd.nextFloat();
@@ -52,14 +59,12 @@ public class Insel extends Swarm {
 		if (init) {
 			if (karte == null)
 				return;
-
-			Random rand = getTop().getRandom();
-			zugaenglichkeit = rand.nextFloat();
 		}
 	}
 
 	@Override
 	public void condition() {
+		super.condition();
 		// Regenerationsphase
 		regenerateResorces();
 	}
@@ -67,22 +72,23 @@ public class Insel extends Swarm {
 	private void regenerateResorces() {
 
 		curHolz += karte.holzReg;
-		if (curHolz > karte.holzMax)
-			curHolz = karte.holzMax;
+		if (curHolz > holzMax)
+			curHolz = holzMax;
 		curWild += karte.wildReg;
-		if (curWild > karte.wildMax)
-			curWild = karte.wildMax;
+		if (curWild > wildMax)
+			curWild = wildMax;
 		curKorn += karte.kornReg;
-		if (curKorn > karte.kornMax)
-			curKorn = karte.kornMax;
+		if (curKorn > kornMax)
+			curKorn = kornMax;
 	}
-	
+
 	public void setDorf(Dorf dorf) throws IllegalAccessException {
-		if (dorf != null) throw new IllegalAccessException("Dorf schon vorhanden!");
+		if (dorf != null)
+			throw new IllegalAccessException("Dorf schon vorhanden!");
 		this.dorf = dorf;
 		dorf.join(this);
 	}
-	
+
 	public void entferneDorf() {
 		dorf.leave();
 		dorf.aufloesen();
