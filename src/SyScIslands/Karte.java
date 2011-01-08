@@ -4,14 +4,6 @@ import eawag.grid.Grid;
 
 public class Karte extends Grid {
 	
-	
-	public float maxGamePF = 10f;
-	public float maxWoodPF = 10f;
-	public float freshWaterProp = 0.2f;
-	
-	public float gameRegeneration = 0.1f;
-	public float woodRegeneration = 0.1f;
-	
 	public void action() {
 		
 		if (getTop().getTime() == 0) {
@@ -22,7 +14,7 @@ public class Karte extends Grid {
 					if (bug != null && bug instanceof LandFeld) {
 						LandFeld feld = (LandFeld) bug;
 						if (feld.insel == null) {
-							feld.insel = new Insel();
+							feld.insel = new Insel(this);
 							feld.join(feld.insel);
 							sucheLandNachbarn(feld.insel, feld);
 							feld.insel.join(this);
