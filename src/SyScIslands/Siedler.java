@@ -1,6 +1,7 @@
 package SyScIslands;
 
 import eawag.grid.Bug;
+import eawag.model.Swarm;
 
 public class Siedler extends Bug {
 	
@@ -23,7 +24,10 @@ public class Siedler extends Bug {
 	}
 	
 	public void sterben() {
-		
+		Swarm parent = getFather();
+		if (parent != null && parent instanceof Dorf) {
+			((Dorf)parent).siedlerEntfernen(this);
+		}
 	}
 	
 	public void reproduktion() {
@@ -31,6 +35,54 @@ public class Siedler extends Bug {
 	}
 	
 	public void berufAusueben() {
+		if (amArbeiten > 0) {
+			// arbeitet bereits
+			amArbeiten--;
+			return;
+		}
 		
+		Swarm parent = getFather();
+		if (parent != null && parent instanceof Dorf) {
+			Dorf dorf = (Dorf)parent;
+			
+			if (amArbeiten == 0) {
+				// fertig mit der arbeit
+				switch(beruf) {
+				case BERUF_BAUER:
+					
+				}
+
+			}
+			
+			int dauer = -1;
+			Karte karte = dorf.getKarte();
+			if (karte == null)
+				return;
+			
+			switch (beruf) {
+			case BERUF_BAUER:
+				dauer = karte.bauerTime;
+				break;
+			case BERUF_JAEGER:
+				dauer = karte.jaegerTime;
+				break;
+			case BERUF_HOLZFAELLER:
+				//dauer = karte.holzfaellerDauer;
+				break;
+			case BERUF_HAFENBAUER:
+				dauer = karte.hafenbauTime;
+				break;
+			case BERUF_SCHIFFSBAUER:
+				dauer = karte.schiffsbauTime;
+				break;
+			default:
+				return;
+			}
+			
+			Insel insel = dorf.getInsel();
+			if (dauer < 0 || insel == null) return;
+			// fange an zu arbeiten
+			amArbeiten = dauer+(int)(dauer * insel.zugaenglichkeit);
+		}
 	}
 }

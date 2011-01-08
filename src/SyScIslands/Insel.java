@@ -21,6 +21,8 @@ public class Insel extends Swarm {
 
 	/** Erlaubt den zugriff auf die hinterlegte Werte */
 	protected Karte karte;
+	
+	protected Dorf dorf = null;
 
 	/** Insel Id */
 	int id;
@@ -66,5 +68,17 @@ public class Insel extends Swarm {
 		curHolz += karte.holzReg;
 		curWild += karte.wildReg;
 		curKorn += karte.kornReg;
+	}
+	
+	public void setDorf(Dorf dorf) throws IllegalAccessException {
+		if (dorf != null) throw new IllegalAccessException("Dorf schon vorhanden!");
+		this.dorf = dorf;
+		dorf.join(this);
+	}
+	
+	public void entferneDorf() {
+		dorf.leave();
+		dorf.aufloesen();
+		dorf = null;
 	}
 }
