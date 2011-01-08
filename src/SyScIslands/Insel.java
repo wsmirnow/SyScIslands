@@ -63,7 +63,10 @@ public class Insel extends Swarm {
 	}
 
 	private void regenerateResorces() {
+
 		curHolz += karte.holzReg;
+		if (curHolz > karte.holzMax)
+			curHolz = karte.holzMax;
 		curWild += karte.wildReg;
 		curKorn += karte.kornReg;
 	}

@@ -21,10 +21,10 @@ public class Karte extends Grid {
 	public float Wasserwahrscheinlichkeit = 0.5f;
 
 	/** Berufsdauer */
-	public int bauerTime = 20;
-	public int jaegerTime = 5;
-	public int hafenbauTime = 50;
-	public int schiffsbauTime = 25;
+	public int bauerDauer = 20;
+	public int jaegerDauer = 5;
+	public int hafenbauerDauer = 50;
+	public int schiffsbauerDauer = 25;
 
 	@Override
 	public void action() {
