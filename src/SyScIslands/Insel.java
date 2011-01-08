@@ -55,6 +55,7 @@ public class Insel extends Swarm {
 
 			Random rand = getTop().getRandom();
 			zugaenglichkeit = rand.nextFloat();
+			return;
 		}
 	}
 

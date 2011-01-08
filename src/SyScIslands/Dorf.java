@@ -65,7 +65,6 @@ public class Dorf extends Swarm {
 			if (kind != null && kind instanceof Siedler){
 				((Siedler)kind).sterben();
 			}
-			
 		}
 	}
 }

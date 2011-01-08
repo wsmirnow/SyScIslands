@@ -24,10 +24,9 @@ public class Siedler extends Bug {
 	}
 	
 	public void sterben() {
-		Swarm parent = getFather();
-		if (parent != null && parent instanceof Dorf) {
-			((Dorf)parent).siedlerEntfernen(this);
-		}
+		Dorf dorf = getDorf();
+		if (dorf == null) return;
+		dorf.siedlerEntfernen(this);
 	}
 	
 	public void reproduktion() {
@@ -42,61 +41,72 @@ public class Siedler extends Bug {
 		}
 		
 		Swarm parent = getFather();
-		if (parent != null && parent instanceof Dorf) {
-			Dorf dorf = (Dorf)parent;
-			Karte karte = dorf.getKarte();
-			if (karte == null)
-				return;
-			
-			if (amArbeiten == 0) {
-				// fertig mit der arbeit
-				switch(beruf) {
-				case BERUF_BAUER:
-					dorf.nahrung += karte.bauerErtrag;
-					break;
-				case BERUF_JAEGER:
-					dorf.nahrung += karte.jaegerErtrag;
-					break;
-				case BERUF_HOLZFAELLER:
-					dorf.holz += karte.holzfaellerErtrag;
-					break;
-				case BERUF_HAFENBAUER:
-					
-					break;
-				case BERUF_SCHIFFSBAUER:
-					
-					break;
-				default: break;
-				}
-				amArbeiten = -1;
-			}
-			
-			int dauer = -1;
-			
-			switch (beruf) {
+		Dorf dorf = getDorf();
+		Karte karte = dorf.getKarte();
+		if (karte == null)
+			return;
+		
+		if (amArbeiten == 0) {
+			// fertig mit der arbeit
+			switch(beruf) {
 			case BERUF_BAUER:
-				dauer = karte.bauerDauer;
+				dorf.nahrung += karte.bauerErtrag;
 				break;
 			case BERUF_JAEGER:
-				dauer = karte.jaegerDauer;
+				dorf.nahrung += karte.jaegerErtrag;
 				break;
 			case BERUF_HOLZFAELLER:
-				dauer = karte.holzfaellerDauer;
+				dorf.holz += karte.holzfaellerErtrag;
 				break;
 			case BERUF_HAFENBAUER:
-				dauer = karte.hafenbauerDauer;
+				
 				break;
 			case BERUF_SCHIFFSBAUER:
-				dauer = karte.schiffsbauerDauer;
+				
 				break;
-			default:
-				return;
+			default: break;
 			}
-			
-			Insel insel = dorf.getInsel();
-			if (dauer < 0 || insel == null) return;
-			// fange an zu arbeiten
-			amArbeiten = dauer+(int)(dauer * insel.zugaenglichkeit);
+			amArbeiten = -1;
 		}
+		
+		int dauer = -1;
+		
+		switch (beruf) {
+		case BERUF_BAUER:
+			dauer = karte.bauerDauer;
+			break;
+		case BERUF_JAEGER:
+			dauer = karte.jaegerDauer;
+			break;
+		case BERUF_HOLZFAELLER:
+			dauer = karte.holzfaellerDauer;
+			break;
+		case BERUF_HAFENBAUER:
+			dauer = karte.hafenbauerDauer;
+			break;
+		case BERUF_SCHIFFSBAUER:
+			dauer = karte.schiffsbauerDauer;
+			break;
+		default:
+			return;
+		}
+		
+		Insel insel = dorf.getInsel();
+		if (dauer < 0 || insel == null) return;
+		// fange an zu arbeiten
+		amArbeiten = dauer+(int)(dauer * insel.zugaenglichkeit);
+	}
+	
+	public Dorf getDorf() {
+		Swarm parent = getFather();
+		if (parent instanceof Dorf) return (Dorf) parent;
+		else return null;
+	}
+	
+	public void action() {
+		Dorf dorf = getDorf();
+		if (dorf == null) return;
+		
+		berufAusueben();
 	}
 }
