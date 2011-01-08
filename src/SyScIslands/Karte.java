@@ -6,17 +6,17 @@ import eawag.grid.Grid;
 public class Karte extends Grid {
 
 	/** Ressourcen */
-	public int maxHolz = 10;
-	public int minHolz = 0;
-	public int regHolz = 1;
+	public int holzMax = 10;
+	public int holzMin = 0;
+	public int holzReg = 1;
 
-	public int maxWild = 25;
-	public int minWild = 0;
-	public int regWild = 1;
+	public int wildMax = 25;
+	public int wildMin = 0;
+	public int wildReg = 1;
 
-	public int maxKorn = 300;
-	public int minKorn = 0;
-	public int regKorn = 1;
+	public int kornMax = 300;
+	public int kornMin = 0;
+	public int kornReg = 1;
 
 	public float Wasserwahrscheinlichkeit = 0.5f;
 
