@@ -13,7 +13,8 @@ public class Siedler extends Bug {
 	
 	public int beruf = 1;
 	public int amArbeiten = 0;
-	public int hungerhungerSeit = 0;
+	public int hungerSeit = 0;
+	public int holzFehltSeit = 0;
 	
 	public Siedler() {
 		this(1+(4*(int)Math.random()));
@@ -23,6 +24,15 @@ public class Siedler extends Bug {
 		this.beruf = berufsId;
 	}
 	
+	public void action() {
+		Dorf dorf = getDorf();
+		if (dorf == null) return;
+		
+		ernaehren();
+		berufAusueben();
+		reproduktion();
+	}
+	
 	public void sterben() {
 		Dorf dorf = getDorf();
 		if (dorf == null) return;
@@ -30,6 +40,30 @@ public class Siedler extends Bug {
 	}
 	
 	public void reproduktion() {
+		
+	}
+	
+	public void ernaehren() {
+		Dorf dorf = getDorf();
+		if (dorf == null) return;
+		Karte karte = dorf.getKarte();
+		if (karte == null) return;
+		
+		if (dorf.nahrung - karte.nahrungsVerbrauch > 0)
+			dorf.nahrung -= karte.nahrungsVerbrauch;
+		else {
+			// nicht genug Nahrung
+			if (++hungerSeit > karte.nahrungsKnappheitZeit)
+				sterben();
+		}
+		
+		if (dorf.holz - karte.holzVerbrauch > 0) 
+			dorf.holz -= karte.holzVerbrauch;
+		else {
+			// nicht genug Holz
+			if (++holzFehltSeit > karte.holzKnappheitZeit)
+				sterben();
+		}
 		
 	}
 	
@@ -101,12 +135,5 @@ public class Siedler extends Bug {
 		Swarm parent = getFather();
 		if (parent instanceof Dorf) return (Dorf) parent;
 		else return null;
-	}
-	
-	public void action() {
-		Dorf dorf = getDorf();
-		if (dorf == null) return;
-		
-		berufAusueben();
 	}
 }

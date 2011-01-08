@@ -36,7 +36,7 @@ public class Insel extends Swarm {
 
 		// Ressourcen Initalisierung
 		java.util.Random rnd = new java.util.Random();
-		// Erstelle random max-Werte f�r Ressourcen
+		// Erstelle random max-Werte fuer Ressourcen
 		this.holzMax = rnd.nextInt(karte.holzMax) + karte.holzMin;
 		this.wildMax = rnd.nextInt(karte.wildMax) + karte.wildMin;
 		this.kornMax = rnd.nextInt(karte.kornMax) + karte.kornMin;
@@ -47,7 +47,6 @@ public class Insel extends Swarm {
 		if (rnd.nextFloat() > karte.Wasserwahrscheinlichkeit)
 			wasser = true;
 		zugaenglichkeit = rnd.nextFloat();
-
 	}
 
 	public int getGroesse() {

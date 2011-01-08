@@ -31,6 +31,14 @@ public class Karte extends Grid {
 	public int bauerErtrag = 50;
 	public int jaegerErtrag = 10;
 	public int holzfaellerErtrag = 10;
+	
+	/** Verbrauch der Siedler pro Zeitschritt */
+	public int nahrungsVerbrauch = 1;
+	public int holzVerbrauch = 1;
+	
+	/** Überlebenswerte der Siedler */
+	public int nahrungsKnappheitZeit = 5;
+	public int holzKnappheitZeit = 15;
 
 	@Override
 	public void action() {

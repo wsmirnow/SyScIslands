@@ -31,12 +31,12 @@ public class Dorf extends Swarm {
 		
 	}
 	
-	public void siedlerHinzufuegen(Siedler siedler) {
+	public synchronized void siedlerHinzufuegen(Siedler siedler) {
 		if (siedler.getFather() != this)
 			siedler.join(this);
 	}
 	
-	public void siedlerEntfernen(Siedler siedler) {
+	public synchronized void siedlerEntfernen(Siedler siedler) {
 		if (siedler.getFather() == this) {
 			siedler.leave();
 		}
