@@ -32,9 +32,9 @@ public class Insel extends Swarm {
 
 		// Ressourcen Initalisierung
 		java.util.Random rnd = new java.util.Random();
-		this.curHolz = rnd.nextInt(karte.maxHolz) + karte.minHolz;
-		this.curWild = rnd.nextInt(karte.maxWild) + karte.minWild;
-		this.curKorn = rnd.nextInt(karte.maxKorn) + karte.minKorn;
+		this.curHolz = rnd.nextInt(karte.holzMax) + karte.holzMin;
+		this.curWild = rnd.nextInt(karte.wildMax) + karte.wildMin;
+		this.curKorn = rnd.nextInt(karte.kornMax) + karte.kornMin;
 		if (rnd.nextFloat() > karte.Wasserwahrscheinlichkeit)
 			wasser = true;
 		zugaenglichkeit = rnd.nextFloat();
@@ -63,8 +63,8 @@ public class Insel extends Swarm {
 	}
 
 	private void regenerateResorces() {
-		curHolz += karte.regHolz;
-		curWild += karte.regWild;
-		curKorn += karte.regKorn;
+		curHolz += karte.holzReg;
+		curWild += karte.wildReg;
+		curKorn += karte.kornReg;
 	}
 }
