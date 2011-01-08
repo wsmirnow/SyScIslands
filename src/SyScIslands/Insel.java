@@ -43,7 +43,7 @@ public class Insel extends Swarm {
 		this.kornMax = rnd.nextInt(karte.kornMax) + karte.kornMin;
 
 		// System.out.print(holzMax + "  " + wildMax + "  " + kornMax + "\n");
-
+		// Erstelle random initial-Werte
 		if (holzMax != 0) {
 			this.curHolz = rnd.nextInt(holzMax);
 		} else {
