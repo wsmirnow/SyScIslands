@@ -8,18 +8,18 @@
   fin = 10
   max = 10
   nsel = (java.lang.String[]
-    "Karte")
+    @0:"Karte")
   nexp = (java.lang.String[]
-    "Depictions"
-    "_root")
+    "_root"
+    @0)
   simulatorHeight = 600
   simulatorWidth = 900
   errorDividerLocation = 422
-  treeDividerLocation = 120
+  treeDividerLocation = 167
   descriptionDividerLocation = 300
   showDescription = false
   hidetools = false
-  showform = false
+  showform = true
   hidetree = false
   hideerror = false
   hideexec = false
@@ -5135,7 +5135,17 @@ Karte
         WasserFeld0)))
   zsize = 2
   ysize = 50
-  xsize = 50)
+  xsize = 50
+  Wasserwahrscheinlichkeit = 0.3
+  regKorn = 1
+  minKorn = 0
+  maxKorn = 300
+  regWild = 3
+  minWild = 10
+  maxWild = 200
+  regHolz = 1
+  minHolz = 25
+  maxHolz = 100)
   _BEGIN_
   WasserFeld2499
   (SyScIslands.WasserFeld
