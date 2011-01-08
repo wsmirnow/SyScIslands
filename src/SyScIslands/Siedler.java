@@ -44,36 +44,50 @@ public class Siedler extends Bug {
 		Swarm parent = getFather();
 		if (parent != null && parent instanceof Dorf) {
 			Dorf dorf = (Dorf)parent;
+			Karte karte = dorf.getKarte();
+			if (karte == null)
+				return;
 			
 			if (amArbeiten == 0) {
 				// fertig mit der arbeit
 				switch(beruf) {
 				case BERUF_BAUER:
+					dorf.nahrung += karte.bauerErtrag;
+					break;
+				case BERUF_JAEGER:
+					dorf.nahrung += karte.jaegerErtrag;
+					break;
+				case BERUF_HOLZFAELLER:
+					dorf.holz += karte.holzfaellerErtrag;
+					break;
+				case BERUF_HAFENBAUER:
 					
+					break;
+				case BERUF_SCHIFFSBAUER:
+					
+					break;
+				default: break;
 				}
-
+				amArbeiten = -1;
 			}
 			
 			int dauer = -1;
-			Karte karte = dorf.getKarte();
-			if (karte == null)
-				return;
 			
 			switch (beruf) {
 			case BERUF_BAUER:
-				dauer = karte.bauerTime;
+				dauer = karte.bauerDauer;
 				break;
 			case BERUF_JAEGER:
-				dauer = karte.jaegerTime;
+				dauer = karte.jaegerDauer;
 				break;
 			case BERUF_HOLZFAELLER:
-				//dauer = karte.holzfaellerDauer;
+				dauer = karte.holzfaellerDauer;
 				break;
 			case BERUF_HAFENBAUER:
-				dauer = karte.hafenbauTime;
+				dauer = karte.hafenbauerDauer;
 				break;
 			case BERUF_SCHIFFSBAUER:
-				dauer = karte.schiffsbauTime;
+				dauer = karte.schiffsbauerDauer;
 				break;
 			default:
 				return;
