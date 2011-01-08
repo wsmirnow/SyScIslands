@@ -4,13 +4,13 @@ import eawag.grid.Bug;
 import eawag.grid.Grid;
 
 public class Schiff extends Bug {
-	java.util.Random rnd = new java.util.Random();
+	private static java.util.Random rnd = new java.util.Random();
 
 	@Override
 	public void action() {
 		// Fahre
 		if (this.getTop().getTime() == 0) {
-			if (this.z != 1) {
+			if (this.z != 2) {
 				// schiff nur auf ebene 1
 				this.leave();
 			}
