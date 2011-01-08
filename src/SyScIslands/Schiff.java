@@ -2,6 +2,7 @@ package SyScIslands;
 
 import eawag.grid.Bug;
 import eawag.grid.Grid;
+import eawag.model.Swarm;
 
 public class Schiff extends Bug {
 	java.util.Random rnd = new java.util.Random();
@@ -16,9 +17,34 @@ public class Schiff extends Bug {
 			}
 		} else {
 			// bewegungsphase
-			int xneu = x + Grid.MOORE_DX[rnd.nextInt(7)];
-			int yneu = y + Grid.MOORE_DY[rnd.nextInt(7)];
-			moveBug(xneu, yneu, z);
+			int xneu;
+			int yneu;
+
+			xneu = x + Grid.MOORE_DX[rnd.nextInt(7)];
+			yneu = y + Grid.MOORE_DY[rnd.nextInt(7)];
+			Bug b = this.getGrid().getBug(xneu, yneu, 1);
+			if (b instanceof LandFeld) {
+				System.out.println("he LAND IN SICHT");
+				// Land in sicht
+				LandFeld land = (LandFeld) b;
+				Insel insel = land.insel;
+				if (insel != null) {
+					System.out.println("eine insel");
+					try {
+						insel.setDorf(new Dorf());
+						zerstoereSchiff();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			} else {
+				moveBug(xneu, yneu, z);
+			}
 		}
+	}
+
+	private void zerstoereSchiff() {
+		this.leave();
 	}
 }
