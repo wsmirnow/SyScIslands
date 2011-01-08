@@ -3,7 +3,7 @@ package SyScIslands;
 import eawag.model.Swarm;
 
 public class Insel extends Swarm {
-
+	private static java.util.Random rnd = new java.util.Random();
 	private static int autoid = 0;
 	private boolean init = true;
 
@@ -33,20 +33,36 @@ public class Insel extends Swarm {
 		this.id = autoid++;
 		this.karte = karte;
 		// System.out.println("Insel mit der id "+id+" wurde erstellt");
+		// System.out.println("Insel " + id);
 
 		// Ressourcen Initalisierung
-		java.util.Random rnd = new java.util.Random();
-		// Erstelle random max-Werte f�r Ressourcen
+		// Erstelle random max-Werte fuer Ressourcen
 		this.holzMax = rnd.nextInt(karte.holzMax) + karte.holzMin;
 		this.wildMax = rnd.nextInt(karte.wildMax) + karte.wildMin;
 		this.kornMax = rnd.nextInt(karte.kornMax) + karte.kornMin;
 
-		this.curHolz = rnd.nextInt(holzMax);
-		this.curWild = rnd.nextInt(wildMax);
-		this.curKorn = rnd.nextInt(kornMax);
+		// System.out.print(holzMax + "  " + wildMax + "  " + kornMax + "\n");
+
+		if (holzMax != 0) {
+			this.curHolz = rnd.nextInt(holzMax);
+		} else {
+			this.curHolz = 0;
+		}
+		if (wildMax != 0) {
+			this.curWild = rnd.nextInt(wildMax);
+		} else {
+			this.curWild = 0;
+		}
+		if (holzMax != 0) {
+			this.curKorn = rnd.nextInt(kornMax);
+		} else {
+			this.curKorn = 0;
+		}
 		if (rnd.nextFloat() > karte.Wasserwahrscheinlichkeit)
 			wasser = true;
 		zugaenglichkeit = rnd.nextFloat();
+
+		// System.out.print(curHolz + "  " + curWild + "  " + curKorn + "\n");
 
 	}
 
