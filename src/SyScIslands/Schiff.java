@@ -12,14 +12,13 @@ public class Schiff extends Bug {
 
 		// Fahre
 		if (this.getTop().getTime() == 0) {
-			if (this.z != 1) {
-				// island fields are only allowed on layer 1!
+			if (this.z != 0) {
+				// Schiffe agieren nur auf der zweiten Ebene
 				this.leave();
 			}
 		} else {
-			this.move_Random(dx, dy);
+			this.moveRandom(dx, dy);
 			this.draw();
 		}
-
 	}
 }
