@@ -15,7 +15,7 @@ public class Karte extends Grid {
 	public void action() {
 		
 		if (getTop().getTime() == 0) {
-			// suche benachbarten Landfelder und erstelle daraus eine Insel
+			// suche benachbarte Landfelder und fuege sie zur einer Insel zusammen
 			for (int x = 0; x < getXSize(); x++) {
 				for (int y = 0; y < getYSize(); y++) {
 					Bug bug = getBug(x, y, 1);
