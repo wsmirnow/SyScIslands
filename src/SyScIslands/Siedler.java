@@ -4,51 +4,56 @@ import eawag.grid.Bug;
 import eawag.model.Swarm;
 
 public class Siedler extends Bug {
-	
+
 	public final static int BERUF_BAUER = 1;
 	public final static int BERUF_JAEGER = 2;
 	public final static int BERUF_HOLZFAELLER = 3;
 	public final static int BERUF_HAFENBAUER = 4;
 	public final static int BERUF_SCHIFFSBAUER = 5;
-	
+
 	public int beruf = 1;
 	public int amArbeiten = 0;
 	public int hungerSeit = 0;
 	public int holzFehltSeit = 0;
-	
+
 	public Siedler() {
-		this(1+(4*(int)Math.random()));
+		this(1 + (4 * (int) Math.random()));
 	}
-	
+
 	public Siedler(int berufsId) {
 		this.beruf = berufsId;
 	}
-	
+
+	@Override
 	public void action() {
 		Dorf dorf = getDorf();
-		if (dorf == null) return;
-		
+		if (dorf == null)
+			return;
+
 		ernaehren();
 		berufAusueben();
 		reproduktion();
 	}
-	
+
 	public void sterben() {
 		Dorf dorf = getDorf();
-		if (dorf == null) return;
+		if (dorf == null)
+			return;
 		dorf.siedlerEntfernen(this);
 	}
-	
+
 	public void reproduktion() {
-		
+
 	}
-	
+
 	public void ernaehren() {
 		Dorf dorf = getDorf();
-		if (dorf == null) return;
+		if (dorf == null)
+			return;
 		Karte karte = dorf.getKarte();
-		if (karte == null) return;
-		
+		if (karte == null)
+			return;
+
 		if (dorf.nahrung - karte.nahrungsVerbrauch > 0)
 			dorf.nahrung -= karte.nahrungsVerbrauch;
 		else {
@@ -56,33 +61,32 @@ public class Siedler extends Bug {
 			if (++hungerSeit > karte.nahrungsKnappheitZeit)
 				sterben();
 		}
-		
-		if (dorf.holz - karte.holzVerbrauch > 0) 
+
+		if (dorf.holz - karte.holzVerbrauch > 0)
 			dorf.holz -= karte.holzVerbrauch;
 		else {
 			// nicht genug Holz
 			if (++holzFehltSeit > karte.holzKnappheitZeit)
 				sterben();
 		}
-		
+
 	}
-	
+
 	public void berufAusueben() {
 		if (amArbeiten > 0) {
 			// arbeitet bereits
 			amArbeiten--;
 			return;
 		}
-		
-		Swarm parent = getFather();
+
 		Dorf dorf = getDorf();
 		Karte karte = dorf.getKarte();
 		if (karte == null)
 			return;
-		
+
 		if (amArbeiten == 0) {
 			// fertig mit der arbeit
-			switch(beruf) {
+			switch (beruf) {
 			case BERUF_BAUER:
 				dorf.nahrung += karte.bauerErtrag;
 				break;
@@ -93,18 +97,19 @@ public class Siedler extends Bug {
 				dorf.holz += karte.holzfaellerErtrag;
 				break;
 			case BERUF_HAFENBAUER:
-				
+
 				break;
 			case BERUF_SCHIFFSBAUER:
-				
+
 				break;
-			default: break;
+			default:
+				break;
 			}
 			amArbeiten = -1;
 		}
-		
+
 		int dauer = -1;
-		
+
 		switch (beruf) {
 		case BERUF_BAUER:
 			dauer = karte.bauerDauer;
@@ -124,16 +129,19 @@ public class Siedler extends Bug {
 		default:
 			return;
 		}
-		
+
 		Insel insel = dorf.getInsel();
-		if (dauer < 0 || insel == null) return;
+		if (dauer < 0 || insel == null)
+			return;
 		// fange an zu arbeiten
-		amArbeiten = dauer+(int)(dauer * insel.zugaenglichkeit);
+		amArbeiten = dauer + (int) (dauer * insel.zugaenglichkeit);
 	}
-	
+
 	public Dorf getDorf() {
 		Swarm parent = getFather();
-		if (parent instanceof Dorf) return (Dorf) parent;
-		else return null;
+		if (parent instanceof Dorf)
+			return (Dorf) parent;
+		else
+			return null;
 	}
 }

@@ -3,8 +3,6 @@ package SyScIslands;
 import java.util.LinkedList;
 import java.util.List;
 
-import eawag.grid.Bug;
-import eawag.model.Agent;
 import eawag.model.Swarm;
 
 public class Dorf extends Swarm {

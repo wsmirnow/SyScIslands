@@ -100,7 +100,7 @@ public class Insel extends Swarm {
 	}
 
 	public void setDorf(Dorf dorf) throws IllegalAccessException {
-		if (dorf != null)
+		if (this.dorf != null)
 			throw new IllegalAccessException("Dorf schon vorhanden!");
 		this.dorf = dorf;
 		dorf.join(this);
