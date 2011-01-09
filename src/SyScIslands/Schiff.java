@@ -32,6 +32,7 @@ public class Schiff extends Bug {
 					System.out.println("eine insel");
 					try {
 						insel.setDorf(new Dorf());
+						land.setDepiction(findDepict("Dorf"));
 						zerstoereSchiff();
 					} catch (IllegalAccessException e) {
 						// TODO Auto-generated catch block
