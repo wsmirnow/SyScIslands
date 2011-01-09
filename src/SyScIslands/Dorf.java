@@ -20,7 +20,7 @@ public class Dorf extends Swarm {
 		this.hafen = false;
 		this.schiffe = new LinkedList<Schiff>();
 		for (int i = 0; i < 10; i++) {
-			new Siedler(1).join(this);
+			new Siedler().join(this);
 		}
 	}
 

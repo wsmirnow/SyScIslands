@@ -24,14 +24,13 @@ public class Schiff extends Bug {
 			yneu = y + Grid.MOORE_DY[rnd.nextInt(7)];
 			Bug b = this.getGrid().getBug(xneu, yneu, 1);
 			if (b instanceof LandFeld) {
-				System.out.println("he LAND IN SICHT");
 				// Land in sicht
 				LandFeld land = (LandFeld) b;
 				Insel insel = land.insel;
 				if (insel != null) {
-					System.out.println("eine insel");
 					try {
 						insel.setDorf(new Dorf());
+						// Setze Dorf-Depiction
 						land.setDepiction(findDepict("Dorf"));
 						zerstoereSchiff();
 					} catch (IllegalAccessException e) {

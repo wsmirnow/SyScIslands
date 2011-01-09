@@ -16,8 +16,10 @@ public class Siedler extends Bug {
 	public int hungerSeit = 0;
 	public int holzFehltSeit = 0;
 
+	private Dorf dorf = null;
+
 	public Siedler() {
-		this(1 + (4 * (int) Math.random()));
+		this(1 + new java.util.Random().nextInt(4));
 	}
 
 	public Siedler(int berufsId) {
@@ -26,7 +28,7 @@ public class Siedler extends Bug {
 
 	@Override
 	public void action() {
-		Dorf dorf = getDorf();
+		this.dorf = getDorf();
 		if (dorf == null)
 			return;
 
@@ -36,10 +38,10 @@ public class Siedler extends Bug {
 	}
 
 	public void sterben() {
-		Dorf dorf = getDorf();
-		if (dorf == null)
+		this.dorf = getDorf();
+		if (this.dorf == null)
 			return;
-		dorf.siedlerEntfernen(this);
+		this.dorf.siedlerEntfernen(this);
 	}
 
 	public void reproduktion() {
@@ -54,17 +56,19 @@ public class Siedler extends Bug {
 		if (karte == null)
 			return;
 
-		if (dorf.nahrung - karte.nahrungsVerbrauch > 0)
+		if (dorf.nahrung - karte.nahrungsVerbrauch > 0) {
 			dorf.nahrung -= karte.nahrungsVerbrauch;
-		else {
+			hungerSeit = 0;
+		} else {
 			// nicht genug Nahrung
 			if (++hungerSeit > karte.nahrungsKnappheitZeit)
 				sterben();
 		}
 
-		if (dorf.holz - karte.holzVerbrauch > 0)
+		if (dorf.holz - karte.holzVerbrauch > 0) {
 			dorf.holz -= karte.holzVerbrauch;
-		else {
+			holzFehltSeit = 0;
+		} else {
 			// nicht genug Holz
 			if (++holzFehltSeit > karte.holzKnappheitZeit)
 				sterben();
@@ -79,8 +83,7 @@ public class Siedler extends Bug {
 			return;
 		}
 
-		Dorf dorf = getDorf();
-		Karte karte = dorf.getKarte();
+		Karte karte = this.dorf.getKarte();
 		if (karte == null)
 			return;
 
