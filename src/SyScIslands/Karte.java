@@ -5,18 +5,14 @@ import eawag.grid.Grid;
 
 public class Karte extends Grid {
 
-	/** Ressourcen */
-	public int holzMax = 10;
+	/** Ressourcen pro Feld */
+	public int holzMax = 3;
 	public int holzMin = 0;
 	public int holzReg = 1;
 
-	public int wildMax = 25;
+	public int wildMax = 5;
 	public int wildMin = 0;
 	public int wildReg = 1;
-
-	public int kornMax = 300;
-	public int kornMin = 0;
-	public int kornReg = 1;
 
 	public float Wasserwahrscheinlichkeit = 0.5f;
 
@@ -41,7 +37,8 @@ public class Karte extends Grid {
 	public int holzKnappheitZeit = 15;
 
 	@Override
-	public void action() {
+	public void condition() {
+		super.condition();
 
 		if (getTop().getTime() == 0) {
 			// suche benachbarte Landfelder und fuege sie zur einer Insel
@@ -52,8 +49,7 @@ public class Karte extends Grid {
 					if (bug != null && bug instanceof LandFeld) {
 						LandFeld feld = (LandFeld) bug;
 						if (feld.insel == null) {
-							feld.insel = new Insel(this);
-							feld.join(feld.insel);
+							feld.setzeInsel(new Insel(this));
 							sucheLandNachbarn(feld.insel, feld);
 							feld.insel.join(this);
 						}
@@ -83,8 +79,7 @@ public class Karte extends Grid {
 				if (b != null && b instanceof LandFeld) {
 					LandFeld nachbar = (LandFeld) b;
 					if (nachbar.insel == null) {
-						nachbar.insel = insel;
-						nachbar.join(insel);
+						nachbar.setzeInsel(insel);
 						sucheLandNachbarn(insel, nachbar);
 					}
 				}

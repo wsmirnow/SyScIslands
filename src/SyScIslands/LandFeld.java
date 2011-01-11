@@ -1,5 +1,7 @@
 package SyScIslands;
 
+import eawag.model.Swarm;
+
 public class LandFeld extends Feld {
 	
 	public Insel insel = null;
@@ -16,4 +18,9 @@ public class LandFeld extends Feld {
 		}
 	}
 	
+	public void setzeInsel(Insel insel) {
+		join(insel);
+		this.insel = insel;
+		insel.setGroesse(insel.getGroesse()+1);
+	}
 }

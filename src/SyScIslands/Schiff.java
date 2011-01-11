@@ -35,7 +35,7 @@ public class Schiff extends Bug {
 						zerstoereSchiff();
 					} catch (IllegalAccessException e) {
 						// TODO Auto-generated catch block
-						e.printStackTrace();
+						//e.printStackTrace();
 					}
 				}
 			} else {
