@@ -14,13 +14,17 @@ public class Dorf extends Swarm {
 	public List<Schiff> schiffe;
 
 	public Dorf() {
+		this(10);
+	}
+	
+	public Dorf(int siedlerAnz) {
 		this.nahrung = 0;
 		this.holz = 0;
 		this.wasser = 0;
 		this.hafen = false;
 		this.schiffe = new LinkedList<Schiff>();
-		for (int i = 0; i < 10; i++) {
-			new Siedler().join(this);
+		for (int i = 0; i < siedlerAnz; i++) {
+			siedlerHinzufuegen(new Siedler());
 		}
 	}
 
@@ -31,7 +35,11 @@ public class Dorf extends Swarm {
 
 	@Override
 	public void action() {
-
+		if (getAnzahlSiedler() == 0) {
+			Insel insel = getInsel();
+			if (insel != null)
+				insel.entferneDorf();
+		}
 	}
 
 	public synchronized void siedlerHinzufuegen(Siedler siedler) {
@@ -71,5 +79,6 @@ public class Dorf extends Swarm {
 				((Siedler) kind).sterben();
 			}
 		}
+		leave();
 	}
 }

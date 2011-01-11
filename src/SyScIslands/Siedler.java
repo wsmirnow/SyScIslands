@@ -87,6 +87,7 @@ public class Siedler extends Bug {
 		if (karte == null)
 			return;
 
+		int ertrag;
 		if (amArbeiten == 0) {
 			// fertig mit der arbeit
 			switch (beruf) {
@@ -94,10 +95,18 @@ public class Siedler extends Bug {
 				dorf.nahrung += karte.bauerErtrag;
 				break;
 			case BERUF_JAEGER:
-				dorf.nahrung += karte.jaegerErtrag;
+				ertrag = dorf.getInsel().curWild < karte.jaegerErtrag ? 
+						     dorf.getInsel().curWild : 
+						     karte.jaegerErtrag;
+				dorf.getInsel().curWild -= ertrag;
+				dorf.nahrung += ertrag;
 				break;
 			case BERUF_HOLZFAELLER:
-				dorf.holz += karte.holzfaellerErtrag;
+				ertrag = dorf.getInsel().curHolz < karte.holzfaellerErtrag ? 
+						     dorf.getInsel().curHolz : 
+							 karte.holzfaellerErtrag;
+				dorf.getInsel().curHolz -= ertrag;
+				dorf.holz += ertrag;
 				break;
 			case BERUF_HAFENBAUER:
 

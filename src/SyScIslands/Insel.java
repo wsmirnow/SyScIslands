@@ -3,19 +3,15 @@ package SyScIslands;
 import eawag.model.Swarm;
 
 public class Insel extends Swarm {
-	@SuppressWarnings("unused")
-	private final static java.util.Random rnd = new java.util.Random();
 	private static int autoid = 0;
 	private boolean init = true;
 
 	public int curHolz = 0;
-	public boolean wasser = false;
 	public int curWild = 0;
-	public int curKorn = 0;
+	public boolean wasser = false;
 
 	public int holzMax = 1;
 	public int wildMax = 1;
-	public int kornMax = 1;
 	/**
 	 * Zugaenglichkeit der Insel entscheidet ueber die Daeur der Berufsausuebung
 	 * (0=kurz, 1=lang)
@@ -29,47 +25,29 @@ public class Insel extends Swarm {
 
 	/** Insel Id */
 	int id;
+	int groesse = 0;
 
 	public Insel(Karte karte) {
 		this.id = autoid++;
 		this.karte = karte;
-		// System.out.println("Insel mit der id "+id+" wurde erstellt");
-		// System.out.println("Insel " + id);
-
-		// Ressourcen Initalisierung
-		java.util.Random rnd = new java.util.Random();
-		// Erstelle random max-Werte fuer Ressourcen
-		this.holzMax = rnd.nextInt(karte.holzMax) + karte.holzMin;
-		this.wildMax = rnd.nextInt(karte.wildMax) + karte.wildMin;
-		this.kornMax = rnd.nextInt(karte.kornMax) + karte.kornMin;
-
-		// System.out.print(holzMax + "  " + wildMax + "  " + kornMax + "\n");
-		// Erstelle random initial-Werte
-		if (holzMax != 0) {
-			this.curHolz = rnd.nextInt(holzMax);
-		} else {
-			this.curHolz = 0;
-		}
-		if (wildMax != 0) {
-			this.curWild = rnd.nextInt(wildMax);
-		} else {
-			this.curWild = 0;
-		}
-		if (holzMax != 0) {
-			this.curKorn = rnd.nextInt(kornMax);
-		} else {
-			this.curKorn = 0;
-		}
-		if (rnd.nextFloat() > karte.Wasserwahrscheinlichkeit)
-			wasser = true;
-		zugaenglichkeit = rnd.nextFloat();
-
-		// System.out.print(curHolz + "  " + curWild + "  " + curKorn + "\n");
-
 	}
-
+	
 	public int getGroesse() {
-		return getChildCount();
+		return groesse;
+	}
+	
+	public synchronized void  setGroesse(int groesse) {
+		this.groesse = groesse;
+	}
+	
+	@Override
+	public void condition() {
+		super.condition();
+		if (init) {
+			return;
+		}
+		// Regenerationsphase
+		regenerateResorces();
 	}
 
 	@Override
@@ -77,27 +55,38 @@ public class Insel extends Swarm {
 		if (init) {
 			if (karte == null)
 				return;
-		}
-	}
+			
+			// Ressourcen Initalisierung
+			java.util.Random rnd = getTop().getRandom();
+			int groesse = getGroesse();
+			this.holzMax = karte.holzMax * groesse;
+			this.wildMax = karte.wildMax * groesse;
+			this.curHolz = (karte.holzMin + rnd.nextInt(karte.holzMax - karte.holzMin)) * groesse;
+			this.curWild = (karte.wildMin + rnd.nextInt(karte.wildMax - karte.wildMin)) * groesse;
+						
+			if (rnd.nextFloat() > karte.Wasserwahrscheinlichkeit)
+				wasser = true;
+			zugaenglichkeit = rnd.nextFloat();
 
-	@Override
-	public void condition() {
-		super.condition();
-		// Regenerationsphase
-		regenerateResorces();
+			System.out.print("Holz: " + curHolz + " Wild: " + curWild + "\n");
+			init = false;
+			return;
+		}
 	}
 
 	private void regenerateResorces() {
 
-		curHolz += karte.holzReg;
-		if (curHolz > holzMax)
+		
+		if (curHolz + (karte.holzReg * getGroesse()) > holzMax)
 			curHolz = holzMax;
-		curWild += karte.wildReg;
-		if (curWild > wildMax)
+		else 
+			curHolz += (karte.holzReg * getGroesse());
+		
+		
+		if (curWild + (karte.wildReg * getGroesse()) > wildMax)
 			curWild = wildMax;
-		curKorn += karte.kornReg;
-		if (curKorn > kornMax)
-			curKorn = kornMax;
+		else 
+			curWild += (karte.wildReg * getGroesse());
 	}
 
 	public void setDorf(Dorf dorf) throws IllegalAccessException {
@@ -108,7 +97,6 @@ public class Insel extends Swarm {
 	}
 
 	public void entferneDorf() {
-		dorf.leave();
 		dorf.aufloesen();
 		dorf = null;
 	}
