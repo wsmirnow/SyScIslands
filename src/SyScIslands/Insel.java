@@ -3,7 +3,8 @@ package SyScIslands;
 import eawag.model.Swarm;
 
 public class Insel extends Swarm {
-	private static java.util.Random rnd = new java.util.Random();
+	@SuppressWarnings("unused")
+	private final static java.util.Random rnd = new java.util.Random();
 	private static int autoid = 0;
 	private boolean init = true;
 
