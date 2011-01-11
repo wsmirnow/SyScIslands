@@ -8,6 +8,10 @@ public class LandFeld extends Feld {
 	
 	public void condition() {
 		super.condition();
+		
+		if (insel != null && insel.dorf == null) {
+			setDepiction(findDepict("Land"));
+		}
 	}
 	
 	public void action() {

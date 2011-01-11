@@ -97,7 +97,6 @@ public class Insel extends Swarm {
 	}
 
 	public void entferneDorf() {
-		dorf.leave();
 		dorf.aufloesen();
 		dorf = null;
 	}
