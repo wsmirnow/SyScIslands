@@ -1,7 +1,5 @@
 package SyScIslands;
 
-import eawag.model.Swarm;
-
 public class LandFeld extends Feld {
 	
 	public Insel insel = null;

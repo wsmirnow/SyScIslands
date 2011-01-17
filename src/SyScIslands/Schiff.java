@@ -2,7 +2,6 @@ package SyScIslands;
 
 import eawag.grid.Bug;
 import eawag.grid.Grid;
-import eawag.model.Swarm;
 
 public class Schiff extends Bug {
 	java.util.Random rnd = new java.util.Random();

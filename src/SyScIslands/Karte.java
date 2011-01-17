@@ -29,7 +29,7 @@ public class Karte extends Grid {
 	public int holzfaellerErtrag = 10;
 	
 	/** Verbrauch der Siedler pro Zeitschritt */
-	public int nahrungsVerbrauch = 1;
+	public int nahrungsVerbrauch = 2;
 	public int holzVerbrauch = 1;
 	
 	/** Überlebenswerte der Siedler */

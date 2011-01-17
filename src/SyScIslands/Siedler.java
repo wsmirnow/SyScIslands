@@ -45,7 +45,12 @@ public class Siedler extends Bug {
 	}
 
 	public void reproduktion() {
-
+		if (dorf == null) return; 
+		
+		// Reproduktion wenn Nahrung ausreichend fuer x Siedler
+		if (dorf.nahrung > dorf.getKarte().nahrungsVerbrauch * 10 && 
+			dorf.holz > dorf.getKarte().holzVerbrauch * 5)
+			dorf.siedlerHinzufuegen(new Siedler());
 	}
 
 	public void ernaehren() {
