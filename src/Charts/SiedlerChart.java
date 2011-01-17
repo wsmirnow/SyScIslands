@@ -28,10 +28,13 @@ public class SiedlerChart extends Chart {
 		for (Object child : childs) {
 			if (!(child instanceof Insel)) continue;
 			Insel insel = (Insel)child;
-			if (insel.getDorf() == null) continue;
 			int inselId = insel.getID();
-			int siedler = insel.getDorf().getAnzahlSiedler();
-			siedlerImDorf.put(inselId, siedler);
+			if (insel.getDorf() == null) {
+				siedlerImDorf.put(inselId, 0);
+			} else {
+				int siedler = insel.getDorf().getAnzahlSiedler();
+				siedlerImDorf.put(inselId, siedler);
+			}
 		}
 		
 		for (Integer inselId : siedlerImDorf.keySet()) {
