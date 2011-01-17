@@ -30,6 +30,7 @@ public class Insel extends Swarm {
 	public Insel(Karte karte) {
 		this.id = autoid++;
 		this.karte = karte;
+		karte.inseln.add(this);
 	}
 	
 	public int getID() {

@@ -1,5 +1,8 @@
 package SyScIslands;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import eawag.grid.Bug;
 import eawag.grid.Grid;
 
@@ -35,6 +38,8 @@ public class Karte extends Grid {
 	/** Überlebenswerte der Siedler */
 	public int nahrungsKnappheitZeit = 5;
 	public int holzKnappheitZeit = 15;
+	
+	protected List<Insel> inseln = new LinkedList<Insel>();
 
 	@Override
 	public void condition() {
@@ -84,5 +89,17 @@ public class Karte extends Grid {
 					}
 				}
 			}
+	}
+	
+	public Insel getInsel(int id) {
+		for (Insel insel : inseln) {
+			if (insel.id == id)
+				return insel;
+		}
+		return null;
+	}
+	
+	public int getAnzahlInsel() {
+		return inseln.size();
 	}
 }

@@ -1,7 +1,6 @@
 package Charts;
 
 import java.util.HashMap;
-import java.util.List;
 
 import SyScIslands.Insel;
 import SyScIslands.Karte;
@@ -24,16 +23,14 @@ public class SiedlerChart extends Chart {
 		if (getTop().getTime() < 1) return;
 		
 		HashMap<Integer, Integer> siedlerImDorf = new HashMap<Integer, Integer>();
-		List childs = (List) karte.getChilds();
-		for (Object child : childs) {
-			if (!(child instanceof Insel)) continue;
-			Insel insel = (Insel)child;
-			int inselId = insel.getID();
+		for (int i = 0; i < karte.getAnzahlInsel(); i++) {
+			Insel insel = karte.getInsel(i);
+			if (insel == null) continue;
 			if (insel.getDorf() == null) {
-				siedlerImDorf.put(inselId, 0);
+				siedlerImDorf.put(i, 0);
 			} else {
 				int siedler = insel.getDorf().getAnzahlSiedler();
-				siedlerImDorf.put(inselId, siedler);
+				siedlerImDorf.put(i, siedler);
 			}
 		}
 		
