@@ -32,6 +32,10 @@ public class Insel extends Swarm {
 		this.karte = karte;
 	}
 	
+	public int getID() {
+		return id;
+	}
+	
 	public int getGroesse() {
 		return groesse;
 	}
@@ -99,5 +103,9 @@ public class Insel extends Swarm {
 	public void entferneDorf() {
 		dorf.aufloesen();
 		dorf = null;
+	}
+	
+	public Dorf getDorf() {
+		return dorf;
 	}
 }
