@@ -22,11 +22,9 @@ public class BerufeChart extends Chart {
 		if (getTop().getTime() < 1) return;
 		
 		HashMap<Integer, Map<Integer, Integer>> berufeProInsel = new HashMap<Integer, Map<Integer, Integer>>();
-		List childs = (List) karte.getChilds();
-		for (Object child : childs) {
-			if (!(child instanceof Insel)) continue;
-			Insel insel = (Insel)child;
-			int inselId = insel.getID();
+		for (int inselId = 0; inselId < karte.getAnzahlInsel(); inselId++) {
+			Insel insel = karte.getInsel(inselId);
+			if (insel == null) continue;
 			if (insel.getDorf() == null) {
 				berufeProInsel.put(inselId, null);
 			} else {
@@ -55,7 +53,7 @@ public class BerufeChart extends Chart {
 			Map<Integer, Integer> berufe = berufeProInsel.get(inselId);
 			if (berufe == null) continue;
 			List<Integer> berufIds = new LinkedList<Integer>(berufe.keySet());
-			Collections.sort(berufIds, new MyComperator(berufe));
+			Collections.sort(berufIds, new MapValueComperator(berufe));
 			for (Integer berufId : berufIds) {
 				String beruf;
 				switch (berufId) {
@@ -78,22 +76,21 @@ public class BerufeChart extends Chart {
 					beruf = "unbekannt";
 				}
 				System.out.println(getTop().getTime()+": insel"+inselId+" "+beruf+" "+ berufe.get(berufId));
-				lineTo(beruf, Chart.TYPE_BALKEN, inselId, berufe.get(berufId));
+				lineTo(beruf, Chart.TYPE_DOT, inselId, berufe.get(berufId));
 			}
 		}
 	}
 	
-	class MyComperator implements Comparator {
+	class MapValueComperator implements Comparator {
 
-		Map<Integer, Integer> berufe;
-		public MyComperator(Map<Integer, Integer> map) {
-			this.berufe = map;
+		Map<Integer, Integer> map;
+		public MapValueComperator(Map<Integer, Integer> map) {
+			this.map = map;
 		}
 		
 		@Override
 		public int compare(Object key1, Object key2) {
-			return berufe.get(key2) - berufe.get(key1);
+			return map.get(key2) - map.get(key1);
 		}
 	}
-
 }
