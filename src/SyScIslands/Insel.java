@@ -32,19 +32,19 @@ public class Insel extends Swarm {
 		this.karte = karte;
 		karte.inseln.add(this);
 	}
-	
+
 	public int getID() {
 		return id;
 	}
-	
+
 	public int getGroesse() {
 		return groesse;
 	}
-	
-	public synchronized void  setGroesse(int groesse) {
+
+	public synchronized void setGroesse(int groesse) {
 		this.groesse = groesse;
 	}
-	
+
 	@Override
 	public void condition() {
 		super.condition();
@@ -60,15 +60,19 @@ public class Insel extends Swarm {
 		if (init) {
 			if (karte == null)
 				return;
-			
+
 			// Ressourcen Initalisierung
 			java.util.Random rnd = getTop().getRandom();
 			int groesse = getGroesse();
 			this.holzMax = karte.holzMax * groesse;
 			this.wildMax = karte.wildMax * groesse;
-			this.curHolz = (karte.holzMin + rnd.nextInt(karte.holzMax - karte.holzMin)) * groesse;
-			this.curWild = (karte.wildMin + rnd.nextInt(karte.wildMax - karte.wildMin)) * groesse;
-						
+			this.curHolz = (karte.holzMin + rnd.nextInt(karte.holzMax
+					- karte.holzMin))
+					* groesse;
+			this.curWild = (karte.wildMin + rnd.nextInt(karte.wildMax
+					- karte.wildMin))
+					* groesse;
+
 			if (rnd.nextFloat() > karte.Wasserwahrscheinlichkeit)
 				wasser = true;
 			zugaenglichkeit = rnd.nextFloat();
@@ -81,16 +85,14 @@ public class Insel extends Swarm {
 
 	private void regenerateResorces() {
 
-		
 		if (curHolz + (karte.holzReg * getGroesse()) > holzMax)
 			curHolz = holzMax;
-		else 
+		else
 			curHolz += (karte.holzReg * getGroesse());
-		
-		
+
 		if (curWild + (karte.wildReg * getGroesse()) > wildMax)
 			curWild = wildMax;
-		else 
+		else
 			curWild += (karte.wildReg * getGroesse());
 	}
 
@@ -105,7 +107,7 @@ public class Insel extends Swarm {
 		dorf.aufloesen();
 		dorf = null;
 	}
-	
+
 	public Dorf getDorf() {
 		return dorf;
 	}

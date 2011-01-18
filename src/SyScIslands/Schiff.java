@@ -1,10 +1,13 @@
 package SyScIslands;
 
+import java.util.Map;
+
 import eawag.grid.Bug;
 import eawag.grid.Grid;
 
 public class Schiff extends Bug {
 	java.util.Random rnd = new java.util.Random();
+	private Map<Integer, Integer> siedler;
 
 	@Override
 	public void action() {
@@ -33,8 +36,9 @@ public class Schiff extends Bug {
 						land.setDepiction(findDepict("Dorf"));
 						zerstoereSchiff();
 					} catch (IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						//e.printStackTrace();
+						// Siedler zum Dorf hinzufuegen
+						for (Integer s : this.siedler.keySet())
+							insel.dorf.siedlerHinzufuegen(new Siedler(s));
 					}
 				}
 			} else {
@@ -45,5 +49,9 @@ public class Schiff extends Bug {
 
 	private void zerstoereSchiff() {
 		this.leave();
+	}
+
+	public void stecheInSee(Map siedler) {
+		this.siedler = siedler;
 	}
 }
