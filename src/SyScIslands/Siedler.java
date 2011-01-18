@@ -42,16 +42,20 @@ public class Siedler extends Bug {
 		if (this.dorf == null)
 			return;
 		this.dorf.siedlerEntfernen(this);
+		setActive(false);
 	}
 
 	public void reproduktion() {
-		if (dorf == null)
-			return;
-
-		// Reproduktion wenn Nahrung ausreichend fuer x Siedler
-		if (dorf.nahrung > dorf.getKarte().nahrungsVerbrauch * 10
-				&& dorf.holz > dorf.getKarte().holzVerbrauch * 5)
+		if (dorf == null) return; 
+		
+		// Reproduktion wenn Nahrung ausreichend fuer 10 Siedler und Holz fuer 5
+		if (dorf.getNahrung() > dorf.getKarte().nahrungsVerbrauch * 2 && 
+			dorf.getHolz() > dorf.getKarte().holzVerbrauch * 2) {
+			
+			dorf.verringereNahrungUm(dorf.getKarte().nahrungsVerbrauch);
+			dorf.verringereHolzUm(dorf.getKarte().holzVerbrauch);
 			dorf.siedlerHinzufuegen(new Siedler());
+		}
 	}
 
 	public void ernaehren() {
@@ -62,8 +66,8 @@ public class Siedler extends Bug {
 		if (karte == null)
 			return;
 
-		if (dorf.nahrung - karte.nahrungsVerbrauch > 0) {
-			dorf.nahrung -= karte.nahrungsVerbrauch;
+		if (dorf.getNahrung() - karte.nahrungsVerbrauch > 0) {
+			dorf.verringereNahrungUm(karte.nahrungsVerbrauch);
 			hungerSeit = 0;
 		} else {
 			// nicht genug Nahrung
@@ -71,8 +75,8 @@ public class Siedler extends Bug {
 				sterben();
 		}
 
-		if (dorf.holz - karte.holzVerbrauch > 0) {
-			dorf.holz -= karte.holzVerbrauch;
+		if (dorf.getHolz() - karte.holzVerbrauch > 0) {
+			dorf.verringereHolzUm(karte.holzVerbrauch);
 			holzFehltSeit = 0;
 		} else {
 			// nicht genug Holz
@@ -83,40 +87,57 @@ public class Siedler extends Bug {
 	}
 
 	public void berufAusueben() {
+		if (getDorf() == null) return;
+		Karte karte = getDorf().getKarte();
+		if (karte == null) return;
+		
 		if (amArbeiten > 0) {
 			// arbeitet bereits
-			amArbeiten--;
+			switch (beruf) {
+			case BERUF_HAFENBAUER:
+//				if (dorf.getHolz() >= karte.hafenbauerVerbrauch) {
+//					dorf.verringereHolzUm(karte.hafenbauerVerbrauch);
+					amArbeiten--;
+//				}
+				break;
+			case BERUF_SCHIFFSBAUER:
+//				if (dorf.getHolz() >= karte.schiffsbauerVerbrauch) {
+//					dorf.verringereHolzUm(karte.schiffsbauerVerbrauch);
+					amArbeiten--;
+//				}
+				break;
+			default:
+				amArbeiten--;
+			}
 			return;
 		}
-
-		Karte karte = this.dorf.getKarte();
-		if (karte == null)
-			return;
 
 		int ertrag;
 		if (amArbeiten == 0) {
 			// fertig mit der arbeit
 			switch (beruf) {
 			case BERUF_BAUER:
-				dorf.nahrung += karte.bauerErtrag;
+				dorf.erhoeheNahrungUm(karte.bauerErtrag);
 				break;
 			case BERUF_JAEGER:
-				ertrag = dorf.getInsel().curWild < karte.jaegerErtrag ? dorf
-						.getInsel().curWild : karte.jaegerErtrag;
+				ertrag = dorf.getInsel().curWild < karte.jaegerErtrag ? 
+						     dorf.getInsel().curWild : 
+						     karte.jaegerErtrag;
 				dorf.getInsel().curWild -= ertrag;
-				dorf.nahrung += ertrag;
+				dorf.erhoeheNahrungUm(ertrag);
 				break;
 			case BERUF_HOLZFAELLER:
-				ertrag = dorf.getInsel().curHolz < karte.holzfaellerErtrag ? dorf
-						.getInsel().curHolz : karte.holzfaellerErtrag;
+				ertrag = dorf.getInsel().curHolz < karte.holzfaellerErtrag ? 
+						     dorf.getInsel().curHolz : 
+							 karte.holzfaellerErtrag;
 				dorf.getInsel().curHolz -= ertrag;
-				dorf.holz += ertrag;
+				dorf.erhoeheHolzUm(ertrag);
 				break;
 			case BERUF_HAFENBAUER:
-
+				dorf.hafen = true;
 				break;
 			case BERUF_SCHIFFSBAUER:
-
+				new Schiff().stecheInSee(dorf);
 				break;
 			default:
 				break;

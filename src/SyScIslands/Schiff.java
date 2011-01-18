@@ -1,5 +1,6 @@
 package SyScIslands;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import eawag.grid.Bug;
@@ -7,7 +8,8 @@ import eawag.grid.Grid;
 
 public class Schiff extends Bug {
 	java.util.Random rnd = new java.util.Random();
-	private Map<Integer, Integer> siedler;
+	private Map<Integer, Integer> siedler = new HashMap<Integer, Integer>();
+	int faterInselId = -1;
 
 	@Override
 	public void action() {
@@ -29,14 +31,20 @@ public class Schiff extends Bug {
 				// Land in sicht
 				LandFeld land = (LandFeld) b;
 				Insel insel = land.insel;
+				
+				// wenn an der erbaungsinsel angekommen
+				if (faterInselId >= 0 && insel.id == faterInselId)
+					moveBug(xneu, yneu, z);
+				
 				if (insel != null) {
 					try {
-						insel.setDorf(new Dorf());
+						insel.setDorf(new Dorf(x, y));
 						// Setze Dorf-Depiction
 						land.setDepiction(findDepict("Dorf"));
 						zerstoereSchiff();
 					} catch (IllegalAccessException e) {
 						// Siedler zum Dorf hinzufuegen
+						if (siedler == null || siedler.isEmpty()) return;
 						for (Integer s : this.siedler.keySet())
 							insel.dorf.siedlerHinzufuegen(new Siedler(s));
 					}
@@ -51,7 +59,19 @@ public class Schiff extends Bug {
 		this.leave();
 	}
 
-	public void stecheInSee(Map siedler) {
-		this.siedler = siedler;
+	public void stecheInSee(Dorf dorf) {
+		for (int i = 0; i < 10; i++) {
+			Siedler s = dorf.getRandomSiedler();
+			if (s == null) continue;
+			int beruf = s.beruf;
+			s.sterben();
+			Integer anz = siedler.get(beruf);
+			if (anz == null) anz = 0;
+			siedler.put(beruf, ++anz);
+		}
+		if (siedler.isEmpty()) return;
+		faterInselId = dorf.getInsel().id;
+		join(dorf.getInsel().karte);
+		moveBug(dorf.xPos, dorf.yPos, 0);
 	}
 }

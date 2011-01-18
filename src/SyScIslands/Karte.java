@@ -9,13 +9,13 @@ import eawag.grid.Grid;
 public class Karte extends Grid {
 
 	/** Ressourcen pro Feld */
-	public int holzMax = 3;
+	public int holzMax = 5;
 	public int holzMin = 0;
-	public int holzReg = 1;
+	public int holzReg = 2;
 
 	public int wildMax = 5;
 	public int wildMin = 0;
-	public int wildReg = 1;
+	public int wildReg = 2;
 
 	public float Wasserwahrscheinlichkeit = 0.5f;
 
@@ -27,9 +27,11 @@ public class Karte extends Grid {
 	public int schiffsbauerDauer = 22;
 	
 	/** Berufsertrag */
-	public int bauerErtrag = 50;
-	public int jaegerErtrag = 10;
-	public int holzfaellerErtrag = 10;
+	public int bauerErtrag = 50; // pro Runde
+	public int jaegerErtrag = 25; // pro Runde
+	public int holzfaellerErtrag = 25; // pro Runde
+	public int schiffsbauerVerbrauch = 2; // pro Zeitschritt
+	public int hafenbauerVerbrauch = 3; // pro Zeitschritt
 	
 	/** Verbrauch der Siedler pro Zeitschritt */
 	public int nahrungsVerbrauch = 2;
