@@ -45,11 +45,12 @@ public class Siedler extends Bug {
 	}
 
 	public void reproduktion() {
-		if (dorf == null) return; 
-		
+		if (dorf == null)
+			return;
+
 		// Reproduktion wenn Nahrung ausreichend fuer x Siedler
-		if (dorf.nahrung > dorf.getKarte().nahrungsVerbrauch * 10 && 
-			dorf.holz > dorf.getKarte().holzVerbrauch * 5)
+		if (dorf.nahrung > dorf.getKarte().nahrungsVerbrauch * 10
+				&& dorf.holz > dorf.getKarte().holzVerbrauch * 5)
 			dorf.siedlerHinzufuegen(new Siedler());
 	}
 
@@ -100,16 +101,14 @@ public class Siedler extends Bug {
 				dorf.nahrung += karte.bauerErtrag;
 				break;
 			case BERUF_JAEGER:
-				ertrag = dorf.getInsel().curWild < karte.jaegerErtrag ? 
-						     dorf.getInsel().curWild : 
-						     karte.jaegerErtrag;
+				ertrag = dorf.getInsel().curWild < karte.jaegerErtrag ? dorf
+						.getInsel().curWild : karte.jaegerErtrag;
 				dorf.getInsel().curWild -= ertrag;
 				dorf.nahrung += ertrag;
 				break;
 			case BERUF_HOLZFAELLER:
-				ertrag = dorf.getInsel().curHolz < karte.holzfaellerErtrag ? 
-						     dorf.getInsel().curHolz : 
-							 karte.holzfaellerErtrag;
+				ertrag = dorf.getInsel().curHolz < karte.holzfaellerErtrag ? dorf
+						.getInsel().curHolz : karte.holzfaellerErtrag;
 				dorf.getInsel().curHolz -= ertrag;
 				dorf.holz += ertrag;
 				break;

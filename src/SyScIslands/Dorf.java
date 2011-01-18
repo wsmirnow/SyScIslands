@@ -16,7 +16,7 @@ public class Dorf extends Swarm {
 	public Dorf() {
 		this(10);
 	}
-	
+
 	public Dorf(int siedlerAnz) {
 		this.nahrung = 0;
 		this.holz = 0;
@@ -55,10 +55,10 @@ public class Dorf extends Swarm {
 
 	public int getAnzahlSiedler() {
 		int siedler = 0;
-		for (int i = 0; i < getChildCount(); i++) 
+		for (int i = 0; i < getChildCount(); i++)
 			if (getChildAt(i) instanceof Siedler)
 				siedler++;
-		
+
 		return siedler;
 	}
 
@@ -86,4 +86,5 @@ public class Dorf extends Swarm {
 		}
 		leave();
 	}
+
 }
