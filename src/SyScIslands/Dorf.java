@@ -3,21 +3,25 @@ package SyScIslands;
 import java.util.LinkedList;
 import java.util.List;
 
+import eawag.model.Agent;
 import eawag.model.Swarm;
 
 public class Dorf extends Swarm {
 
-	public int nahrung;
-	public int holz;
+	private int nahrung;
+	private int holz;
 	public int wasser;
 	public boolean hafen;
 	public List<Schiff> schiffe;
+	public int xPos, yPos;
 
-	public Dorf() {
-		this(10);
+	public Dorf(int xPos, int yPos) {
+		this(xPos, yPos, 10);
 	}
 	
-	public Dorf(int siedlerAnz) {
+	public Dorf(int xPos, int yPos, int siedlerAnz) {
+		this.xPos = xPos;
+		this.yPos = yPos;
 		this.nahrung = 0;
 		this.holz = 0;
 		this.wasser = 0;
@@ -85,5 +89,50 @@ public class Dorf extends Swarm {
 			}
 		}
 		leave();
+	}
+	
+	public Siedler getRandomSiedler() {
+		if (getChildCount() <= 1) return null;
+		
+		int siedlerId = getTop().getRandom().nextInt(getChildCount());
+		Agent child = getChildAt(siedlerId);
+		if (child instanceof Siedler) return (Siedler)child;
+		else return null;
+	}
+	
+	public synchronized int erhoeheHolzUm(int differenz) {
+		holz += differenz;
+		return holz;
+	}
+	
+	public synchronized int verringereHolzUm(int differenz) {
+		holz -= differenz;
+		return holz;
+	}
+	
+	public synchronized void setHolz(int holz) {
+		this.holz = holz;
+	}
+	
+	public synchronized int getHolz() {
+		return holz;
+	}
+	
+	public synchronized int erhoeheNahrungUm(int differenz) {
+		nahrung += differenz;
+		return nahrung;
+	}
+	
+	public synchronized int verringereNahrungUm(int differenz) {
+		nahrung -= differenz;
+		return nahrung;
+	}
+	
+	public synchronized void setNahrung(int nahrung) {
+		this.nahrung = nahrung;
+	}
+	
+	public synchronized int getNahrung() {
+		return nahrung;
 	}
 }
