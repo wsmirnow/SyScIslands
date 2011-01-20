@@ -17,6 +17,11 @@ public class BerufeChart extends Chart {
 	
 	public Karte karte;
 	
+	public BerufeChart() {
+		setVTitle("Anzahl Siedler");
+		setHTitle("");
+	}
+	
 	public void condition() {
 		super.condition();
 		if (getTop().getTime() < 1) return;
@@ -36,11 +41,9 @@ public class BerufeChart extends Chart {
 				Dorf dorf = insel.getDorf();
 				List dorfChilds = (List) dorf.getChilds();
 				Map<Integer, Integer> berufe = new HashMap<Integer, Integer>();
-				int anzSiedler = 0;
 				for (Object dorfChild : dorfChilds) {
 					if (dorfChild instanceof Siedler) {
 						Siedler siedler = (Siedler) dorfChild;
-						anzSiedler++;
 						
 						int beruf = siedler.beruf;
 						Integer berufAnz = berufe.get(beruf);
@@ -51,6 +54,7 @@ public class BerufeChart extends Chart {
 				berufeProInsel.put(inselId, berufe);
 			}
 		}		
+		
 		
 		for (Integer inselId : berufeProInsel.keySet()) {
 			

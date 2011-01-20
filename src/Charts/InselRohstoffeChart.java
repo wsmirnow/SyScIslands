@@ -4,9 +4,14 @@ import eawag.chart.Chart;
 import SyScIslands.Insel;
 import SyScIslands.Karte;
 
-public class RohstoffeChart extends Chart {
+public class InselRohstoffeChart extends Chart {
 	
 	public Karte karte;
+	
+	public InselRohstoffeChart() {
+		setHTitle("Zeitschritte");
+		setVTitle("Resourcenmenge");
+	}
 	
 	public void condition() {
 		super.condition();
