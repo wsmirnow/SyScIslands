@@ -17,9 +17,13 @@ public class Siedler extends Bug {
 	public int holzFehltSeit = 0;
 
 	private Dorf dorf = null;
+	
+	Schiff schiff = null;
+	// Lock-Variable fuer den Zugriff auf das schiff;
+	static Object lockSchiff = new Object();
 
 	public Siedler() {
-		this(1 + new java.util.Random().nextInt(4));
+		this(1 + new java.util.Random().nextInt(5));
 	}
 
 	public Siedler(int berufsId) {
@@ -50,7 +54,8 @@ public class Siedler extends Bug {
 		
 		// Reproduktion wenn Nahrung ausreichend fuer 10 Siedler und Holz fuer 5
 		if (dorf.getNahrung() > dorf.getKarte().nahrungsVerbrauch * 2 && 
-			dorf.getHolz() > dorf.getKarte().holzVerbrauch * 2) {
+			dorf.getHolz() > dorf.getKarte().holzVerbrauch * 2 &&
+			dorf.getChildCount() < dorf.getInsel().groesse * 5) {
 			
 			dorf.verringereNahrungUm(dorf.getKarte().nahrungsVerbrauch);
 			dorf.verringereHolzUm(dorf.getKarte().holzVerbrauch);
@@ -95,16 +100,10 @@ public class Siedler extends Bug {
 			// arbeitet bereits
 			switch (beruf) {
 			case BERUF_HAFENBAUER:
-//				if (dorf.getHolz() >= karte.hafenbauerVerbrauch) {
-//					dorf.verringereHolzUm(karte.hafenbauerVerbrauch);
+				if (dorf.getHolz() >= karte.hafenbauerVerbrauch) {
+					dorf.verringereHolzUm(karte.hafenbauerVerbrauch);
 					amArbeiten--;
-//				}
-				break;
-			case BERUF_SCHIFFSBAUER:
-//				if (dorf.getHolz() >= karte.schiffsbauerVerbrauch) {
-//					dorf.verringereHolzUm(karte.schiffsbauerVerbrauch);
-					amArbeiten--;
-//				}
+				}
 				break;
 			default:
 				amArbeiten--;
@@ -136,9 +135,6 @@ public class Siedler extends Bug {
 			case BERUF_HAFENBAUER:
 				dorf.hafen = true;
 				break;
-			case BERUF_SCHIFFSBAUER:
-				new Schiff().stecheInSee(dorf);
-				break;
 			default:
 				break;
 			}
@@ -161,15 +157,28 @@ public class Siedler extends Bug {
 			dauer = karte.hafenbauerDauer;
 			break;
 		case BERUF_SCHIFFSBAUER:
-			dauer = karte.schiffsbauerDauer;
+			if (getSchiff() == null)
+				setSchiff(new Schiff((int)(karte.schiffsbauerDauer * getDorf().getInsel().zugaenglichkeit)));
+			else {
+				if (getDorf().getHolz() > karte.schiffsbauerVerbrauch) {
+					getDorf().verringereHolzUm(karte.schiffsbauerVerbrauch);
+					if (getSchiff().verringereBauzeit(1) < 1) {
+						if (getDorf().hafen && getSchiff().stecheInSee(getDorf())) {
+							setSchiff(null);
+						}
+					}
+				}
+			}
+			dauer = Integer.MIN_VALUE;
 			break;
 		default:
 			return;
 		}
 
 		Insel insel = dorf.getInsel();
-		if (dauer < 0 || insel == null)
+		if (dauer < 0)
 			return;
+		
 		// fange an zu arbeiten
 		amArbeiten = dauer + (int) (dauer * insel.zugaenglichkeit);
 	}
@@ -180,5 +189,19 @@ public class Siedler extends Bug {
 			return (Dorf) parent;
 		else
 			return null;
+	}
+	
+	public Schiff getSchiff() {
+		Schiff schiff;
+		synchronized (lockSchiff) {
+			schiff = this.schiff;
+		}
+		return schiff;
+	}
+	
+	public void setSchiff(Schiff schiff) {
+		synchronized (lockSchiff) {
+			this.schiff = schiff;
+		}
 	}
 }
