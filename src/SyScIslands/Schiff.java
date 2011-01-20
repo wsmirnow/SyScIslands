@@ -10,14 +10,14 @@ public class Schiff extends Bug {
 	java.util.Random rnd = new java.util.Random();
 	private Map<Integer, Integer> siedler = new HashMap<Integer, Integer>();
 	int faterInselId = -1;
-	
+
 	private int bauzeit;
-	
+
 	public Schiff() {
 		this.bauzeit = -1;
 		setActive(true);
 	}
-	
+
 	public Schiff(int bauzeit) {
 		this.bauzeit = bauzeit;
 		setActive(false);
@@ -32,8 +32,9 @@ public class Schiff extends Bug {
 				this.leave();
 			}
 		} else {
-			if (bauzeit > 0) return;
-			
+			if (bauzeit > 0)
+				return;
+
 			// bewegungsphase
 			int xneu;
 			int yneu;
@@ -45,18 +46,19 @@ public class Schiff extends Bug {
 				// Land in sicht
 				LandFeld land = (LandFeld) b;
 				Insel insel = land.insel;
-				
+
 				// wenn an der erbaungsinsel angekommen
 				if (faterInselId >= 0 && insel.id == faterInselId)
 					moveBug(xneu, yneu, z);
-				
+
 				if (insel != null) {
 					try {
 						insel.setDorf(new Dorf(xneu, yneu));
 						zerstoereSchiff();
 					} catch (IllegalAccessException e) {
 						// Siedler zum Dorf hinzufuegen
-						if (siedler == null || siedler.isEmpty()) return;
+						if (siedler == null || siedler.isEmpty())
+							return;
 						for (Integer s : this.siedler.keySet())
 							insel.dorf.siedlerHinzufuegen(new Siedler(s));
 					}
@@ -72,33 +74,36 @@ public class Schiff extends Bug {
 	}
 
 	public synchronized boolean stecheInSee(Dorf dorf) {
-		if (dorf == null || isActive()) return false;
+		if (dorf == null || isActive())
+			return false;
 		if (siedler.isEmpty()) {
 			for (int i = 0; i < 20; i++) {
 				Siedler s = dorf.getRandomSiedler();
-				if (s == null) continue;
+				if (s == null)
+					continue;
 				int beruf = s.beruf;
 				s.sterben();
 				Integer anz = siedler.get(beruf);
-				if (anz == null) anz = 0;
+				if (anz == null)
+					anz = 0;
 				siedler.put(beruf, ++anz);
 			}
 		}
-		if (siedler.isEmpty() || 
-		    dorf.getKarte().getBug(dorf.xPos, dorf.yPos, 0) instanceof Schiff) 
+		if (siedler.isEmpty()
+				|| dorf.getKarte().getBug(dorf.xPos, dorf.yPos, 0) instanceof Schiff)
 			return false;
-		
+
 		faterInselId = dorf.getInsel().id;
 		join(dorf.getInsel().karte);
 		moveBug(dorf.xPos, dorf.yPos, 0);
 		setActive(true);
 		return true;
 	}
-	
+
 	public synchronized int getBauzeit() {
 		return bauzeit;
 	}
-	
+
 	public synchronized int verringereBauzeit(int differenz) {
 		bauzeit -= differenz;
 		return bauzeit;

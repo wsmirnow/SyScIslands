@@ -24,23 +24,23 @@ public class Karte extends Grid {
 	public int jaegerDauer = 5;
 	public int holzfaellerDauer = 3;
 	public int hafenbauerDauer = 100;
-	public int schiffsbauerDauer = 150;
-	
+	public int schiffsbauerDauer = 50;
+
 	/** Berufsertrag */
 	public int bauerErtrag = 10; // pro Runde
 	public int jaegerErtrag = 5; // pro Runde
 	public int holzfaellerErtrag = 25; // pro Runde
 	public int schiffsbauerVerbrauch = 2; // pro Zeitschritt
 	public int hafenbauerVerbrauch = 3; // pro Zeitschritt
-	
+
 	/** Verbrauch der Siedler pro Zeitschritt */
 	public int nahrungsVerbrauch = 2;
 	public int holzVerbrauch = 1;
-	
+
 	/** Überlebenswerte der Siedler */
 	public int nahrungsKnappheitZeit = 5;
 	public int holzKnappheitZeit = 15;
-	
+
 	protected List<Insel> inseln = new LinkedList<Insel>();
 
 	@Override
@@ -92,7 +92,7 @@ public class Karte extends Grid {
 				}
 			}
 	}
-	
+
 	public Insel getInsel(int id) {
 		for (Insel insel : inseln) {
 			if (insel.id == id)
@@ -100,7 +100,7 @@ public class Karte extends Grid {
 		}
 		return null;
 	}
-	
+
 	public int getAnzahlInsel() {
 		return inseln.size();
 	}

@@ -14,11 +14,12 @@ public class Dorf extends Swarm {
 	public boolean hafen;
 	public List<Schiff> schiffe;
 	public int xPos, yPos;
+	public int schiffBauzeit;
 
 	public Dorf(int xPos, int yPos) {
 		this(xPos, yPos, 10);
 	}
-	
+
 	public Dorf(int xPos, int yPos, int siedlerAnz) {
 		this.xPos = xPos;
 		this.yPos = yPos;
@@ -59,10 +60,10 @@ public class Dorf extends Swarm {
 
 	public int getAnzahlSiedler() {
 		int siedler = 0;
-		for (int i = 0; i < getChildCount(); i++) 
+		for (int i = 0; i < getChildCount(); i++)
 			if (getChildAt(i) instanceof Siedler)
 				siedler++;
-		
+
 		return siedler;
 	}
 
@@ -90,48 +91,51 @@ public class Dorf extends Swarm {
 		}
 		leave();
 	}
-	
+
 	public Siedler getRandomSiedler() {
-		if (getChildCount() <= 1) return null;
-		
+		if (getChildCount() <= 1)
+			return null;
+
 		int siedlerId = getTop().getRandom().nextInt(getChildCount());
 		Agent child = getChildAt(siedlerId);
-		if (child instanceof Siedler) return (Siedler)child;
-		else return null;
+		if (child instanceof Siedler)
+			return (Siedler) child;
+		else
+			return null;
 	}
-	
+
 	public synchronized int erhoeheHolzUm(int differenz) {
 		holz += differenz;
 		return holz;
 	}
-	
+
 	public synchronized int verringereHolzUm(int differenz) {
 		holz -= differenz;
 		return holz;
 	}
-	
+
 	public synchronized void setHolz(int holz) {
 		this.holz = holz;
 	}
-	
+
 	public synchronized int getHolz() {
 		return holz;
 	}
-	
+
 	public synchronized int erhoeheNahrungUm(int differenz) {
 		nahrung += differenz;
 		return nahrung;
 	}
-	
+
 	public synchronized int verringereNahrungUm(int differenz) {
 		nahrung -= differenz;
 		return nahrung;
 	}
-	
+
 	public synchronized void setNahrung(int nahrung) {
 		this.nahrung = nahrung;
 	}
-	
+
 	public synchronized int getNahrung() {
 		return nahrung;
 	}
