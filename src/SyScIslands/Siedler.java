@@ -55,7 +55,7 @@ public class Siedler extends Bug {
 		// Reproduktion wenn Nahrung ausreichend fuer 10 Siedler und Holz fuer 5
 		if (dorf.getNahrung() > dorf.getKarte().nahrungsVerbrauch * 2 && 
 			dorf.getHolz() > dorf.getKarte().holzVerbrauch * 2 &&
-			dorf.getChildCount() < dorf.getInsel().groesse * 5) {
+			dorf.getChildCount() < dorf.getInsel().groesse * 1) {
 			
 			dorf.verringereNahrungUm(dorf.getKarte().nahrungsVerbrauch);
 			dorf.verringereHolzUm(dorf.getKarte().holzVerbrauch);
