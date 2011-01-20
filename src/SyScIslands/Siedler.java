@@ -17,7 +17,7 @@ public class Siedler extends Bug {
 	public int holzFehltSeit = 0;
 
 	private Dorf dorf = null;
-
+	
 	Schiff schiff = null;
 	// Lock-Variable fuer den Zugriff auf das schiff;
 	static Object lockSchiff = new Object();
@@ -50,14 +50,13 @@ public class Siedler extends Bug {
 	}
 
 	public void reproduktion() {
-		if (dorf == null)
-			return;
-
+		if (dorf == null) return; 
+		
 		// Reproduktion wenn Nahrung ausreichend fuer 10 Siedler und Holz fuer 5
-		if (dorf.getNahrung() > dorf.getKarte().nahrungsVerbrauch * 2
-				&& dorf.getHolz() > dorf.getKarte().holzVerbrauch * 2
-				&& dorf.getChildCount() < dorf.getInsel().groesse) {
-
+		if (dorf.getNahrung() > dorf.getKarte().nahrungsVerbrauch * 2 && 
+			dorf.getHolz() > dorf.getKarte().holzVerbrauch * 2 &&
+			dorf.getChildCount() < dorf.getInsel().groesse * 1) {
+			
 			dorf.verringereNahrungUm(dorf.getKarte().nahrungsVerbrauch);
 			dorf.verringereHolzUm(dorf.getKarte().holzVerbrauch);
 			dorf.siedlerHinzufuegen(new Siedler());
@@ -93,12 +92,10 @@ public class Siedler extends Bug {
 	}
 
 	public void berufAusueben() {
-		if (getDorf() == null)
-			return;
+		if (getDorf() == null) return;
 		Karte karte = getDorf().getKarte();
-		if (karte == null)
-			return;
-
+		if (karte == null) return;
+		
 		if (amArbeiten > 0) {
 			// arbeitet bereits
 			switch (beruf) {
@@ -122,14 +119,16 @@ public class Siedler extends Bug {
 				dorf.erhoeheNahrungUm(karte.bauerErtrag);
 				break;
 			case BERUF_JAEGER:
-				ertrag = dorf.getInsel().curWild < karte.jaegerErtrag ? dorf
-						.getInsel().curWild : karte.jaegerErtrag;
+				ertrag = dorf.getInsel().curWild < karte.jaegerErtrag ? 
+						     dorf.getInsel().curWild : 
+						     karte.jaegerErtrag;
 				dorf.getInsel().curWild -= ertrag;
 				dorf.erhoeheNahrungUm(ertrag);
 				break;
 			case BERUF_HOLZFAELLER:
-				ertrag = dorf.getInsel().curHolz < karte.holzfaellerErtrag ? dorf
-						.getInsel().curHolz : karte.holzfaellerErtrag;
+				ertrag = dorf.getInsel().curHolz < karte.holzfaellerErtrag ? 
+						     dorf.getInsel().curHolz : 
+							 karte.holzfaellerErtrag;
 				dorf.getInsel().curHolz -= ertrag;
 				dorf.erhoeheHolzUm(ertrag);
 				break;
@@ -159,14 +158,12 @@ public class Siedler extends Bug {
 			break;
 		case BERUF_SCHIFFSBAUER:
 			if (getSchiff() == null)
-				setSchiff(new Schiff((int) (karte.schiffsbauerDauer * getDorf()
-						.getInsel().zugaenglichkeit)));
+				setSchiff(new Schiff((int)(karte.schiffsbauerDauer * getDorf().getInsel().zugaenglichkeit)));
 			else {
 				if (getDorf().getHolz() > karte.schiffsbauerVerbrauch) {
 					getDorf().verringereHolzUm(karte.schiffsbauerVerbrauch);
 					if (getSchiff().verringereBauzeit(1) < 1) {
-						if (getDorf().hafen
-								&& getSchiff().stecheInSee(getDorf())) {
+						if (getDorf().hafen && getSchiff().stecheInSee(getDorf())) {
 							setSchiff(null);
 						}
 					}
@@ -181,7 +178,7 @@ public class Siedler extends Bug {
 		Insel insel = dorf.getInsel();
 		if (dauer < 0)
 			return;
-
+		
 		// fange an zu arbeiten
 		amArbeiten = dauer + (int) (dauer * insel.zugaenglichkeit);
 	}
@@ -193,7 +190,7 @@ public class Siedler extends Bug {
 		else
 			return null;
 	}
-
+	
 	public Schiff getSchiff() {
 		Schiff schiff;
 		synchronized (lockSchiff) {
@@ -201,7 +198,7 @@ public class Siedler extends Bug {
 		}
 		return schiff;
 	}
-
+	
 	public void setSchiff(Schiff schiff) {
 		synchronized (lockSchiff) {
 			this.schiff = schiff;

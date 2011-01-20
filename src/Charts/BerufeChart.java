@@ -21,10 +21,15 @@ public class BerufeChart extends Chart {
 		super.condition();
 		if (getTop().getTime() < 1) return;
 		
+		removeAllData();
+		
 		HashMap<Integer, Map<Integer, Integer>> berufeProInsel = new HashMap<Integer, Map<Integer, Integer>>();
 		for (int inselId = 0; inselId < karte.getAnzahlInsel(); inselId++) {
 			Insel insel = karte.getInsel(inselId);
 			if (insel == null) continue;
+
+			addHGuide((inselId*5)+1, "Insel "+inselId);
+						
 			if (insel.getDorf() == null) {
 				berufeProInsel.put(inselId, null);
 			} else {
@@ -45,11 +50,10 @@ public class BerufeChart extends Chart {
 				}
 				berufeProInsel.put(inselId, berufe);
 			}
-		}
+		}		
 		
-		removeAllData();
 		for (Integer inselId : berufeProInsel.keySet()) {
-			addHGuide(inselId, "Insel "+inselId);
+			
 			Map<Integer, Integer> berufe = berufeProInsel.get(inselId);
 			if (berufe == null) continue;
 			List<Integer> berufIds = new LinkedList<Integer>(berufe.keySet());
@@ -75,8 +79,10 @@ public class BerufeChart extends Chart {
 				default:
 					beruf = "unbekannt";
 				}
-				System.out.println(getTop().getTime()+": insel"+inselId+" "+beruf+" "+ berufe.get(berufId));
-				lineTo(beruf, Chart.TYPE_DOT, inselId, berufe.get(berufId));
+				
+				
+				//System.out.println(getTop().getTime()+": insel"+inselId+" "+beruf+" "+ berufe.get(berufId));
+				lineTo(beruf, Chart.TYPE_BALKEN, inselId*5+berufId, berufe.get(berufId));
 			}
 		}
 	}
