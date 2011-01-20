@@ -104,4 +104,8 @@ public class Karte extends Grid {
 	public int getAnzahlInsel() {
 		return inseln.size();
 	}
+	
+	public List<Insel> getInseln() {
+		return inseln;
+	}
 }

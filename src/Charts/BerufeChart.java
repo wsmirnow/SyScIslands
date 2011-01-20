@@ -24,9 +24,9 @@ public class BerufeChart extends Chart {
 		removeAllData();
 		
 		HashMap<Integer, Map<Integer, Integer>> berufeProInsel = new HashMap<Integer, Map<Integer, Integer>>();
-		for (int inselId = 0; inselId < karte.getAnzahlInsel(); inselId++) {
-			Insel insel = karte.getInsel(inselId);
+		for (Insel insel : karte.getInseln()) {
 			if (insel == null) continue;
+			int inselId = insel.getID();
 
 			addHGuide((inselId*5)+1, "Insel "+inselId);
 						
@@ -79,7 +79,6 @@ public class BerufeChart extends Chart {
 				default:
 					beruf = "unbekannt";
 				}
-				
 				
 				//System.out.println(getTop().getTime()+": insel"+inselId+" "+beruf+" "+ berufe.get(berufId));
 				lineTo(beruf, Chart.TYPE_BALKEN, inselId*5+berufId, berufe.get(berufId));

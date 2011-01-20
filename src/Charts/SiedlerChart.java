@@ -25,15 +25,16 @@ public class SiedlerChart extends Chart {
 			return;
 
 		HashMap<Integer, Integer> siedlerImDorf = new HashMap<Integer, Integer>();
-		for (int i = 0; i < karte.getAnzahlInsel(); i++) {
-			Insel insel = karte.getInsel(i);
+		
+		for (Insel insel : karte.getInseln()) {
+			int inselId = insel.getID();
 			if (insel == null)
 				continue;
 			if (insel.getDorf() == null) {
-				siedlerImDorf.put(i, 0);
+				siedlerImDorf.put(inselId, 0);
 			} else {
-				int siedler = insel.getDorf().getAnzahlSiedler();
-				siedlerImDorf.put(i, siedler);
+				int siedlerAnz = insel.getDorf().getAnzahlSiedler();
+				siedlerImDorf.put(inselId, siedlerAnz);
 			}
 		}
 
