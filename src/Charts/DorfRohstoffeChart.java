@@ -19,12 +19,19 @@ public class DorfRohstoffeChart extends Chart {
 		if (getTop().getTime() < 1) return;
 		
 		for (Insel insel : karte.getInseln()) {
-			if (insel == null || insel.getDorf() == null) continue;
 			int inselId = insel.getID();
-			Dorf dorf = insel.getDorf();
+			int nahrung, holz;
+			if (insel.getDorf() == null) {
+				nahrung = 0;
+				holz = 0;
+			} else {
+				Dorf dorf = insel.getDorf();
+				nahrung = dorf.getNahrung();
+				holz = dorf.getHolz();
+			}
 			
-			lineTo("Dorf auf Insel "+inselId+" - Nahrung", Chart.TYPE_LINE, getTop().getTime(), dorf.getNahrung());
-			lineTo("Dorf auf Insel "+inselId+" - Holz", Chart.TYPE_LINE, getTop().getTime(), dorf.getHolz());
+			lineTo("Dorf auf Insel "+inselId+" - Nahrung", Chart.TYPE_LINE, getTop().getTime(), nahrung);
+			lineTo("Dorf auf Insel "+inselId+" - Holz", Chart.TYPE_LINE, getTop().getTime(), holz);
 		}
 	}
 

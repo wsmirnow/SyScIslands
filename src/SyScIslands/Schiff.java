@@ -11,6 +11,8 @@ public class Schiff extends Bug {
 	private Map<Integer, Integer> siedler = new HashMap<Integer, Integer>();
 	int faterInselId = -1;
 	
+	protected Dorf dorf = null;
+	
 	protected int nahrung = 0;
 	protected int holz = 0;
 
@@ -58,6 +60,9 @@ public class Schiff extends Bug {
 							insel.setDorf(new Dorf(xneu, yneu, siedler.size(), nahrung, holz));
 						else 
 							insel.setDorf(new Dorf(xneu, yneu));
+						if (dorf != null) {
+							dorf.schiffe.remove(this);
+						}
 						zerstoereSchiff();
 					} catch (IllegalAccessException e) {
 						// Siedler zum Dorf hinzufuegen
@@ -80,7 +85,7 @@ public class Schiff extends Bug {
 	public synchronized boolean stecheInSee(Dorf dorf) {
 		if (dorf == null)
 			return false;
-		if (siedler.isEmpty()) {
+		if (dorf.schiffe.size() < 5 && siedler.isEmpty()) {
 			for (int i = 0; i < 10 && siedler.size() < 10; i++) {
 				Siedler s = dorf.getRandomSiedler();
 				if (s == null)
@@ -105,13 +110,17 @@ public class Schiff extends Bug {
 			}
 		}
 		if (siedler.isEmpty()
-				|| dorf.getKarte().getBug(dorf.xPos, dorf.yPos, 0) instanceof Schiff)
+				|| dorf.getKarte().getBug(dorf.xPos, dorf.yPos, 0) instanceof Schiff) {
+			// return false;
+			setActive(false);
 			return false;
+		}
 
 		faterInselId = dorf.getInsel().id;
+		this.dorf = dorf;
 		join(dorf.getInsel().karte);
 		moveBug(dorf.xPos, dorf.yPos, 0);
-		setActive(true);
+		//setActive(true);
 		return true;
 	}
 
