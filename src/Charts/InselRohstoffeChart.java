@@ -21,8 +21,8 @@ public class InselRohstoffeChart extends Chart {
 			if (insel == null) continue;
 			int inselId = insel.getID();
 			
-			lineTo("Insel "+inselId+" Wild", Chart.TYPE_LINE, getTop().getTime(), insel.curWild);
-			lineTo("Insel "+inselId+" Holz", Chart.TYPE_LINE, getTop().getTime(), insel.curHolz);
+			lineTo("Insel "+inselId+" Wild", Chart.TYPE_LINE, getTop().getTime(), insel.getWild());
+			lineTo("Insel "+inselId+" Holz", Chart.TYPE_LINE, getTop().getTime(), insel.getHolz());
 		}
 	}
 

@@ -15,7 +15,8 @@ public class Schiff extends Bug {
 
 	public Schiff() {
 		this.bauzeit = -1;
-		setActive(true);
+		//setActive(true);
+		setActive(false);
 	}
 
 	public Schiff(int bauzeit) {
@@ -53,7 +54,10 @@ public class Schiff extends Bug {
 
 				if (insel != null) {
 					try {
-						insel.setDorf(new Dorf(xneu, yneu));
+						if (siedler != null)
+							insel.setDorf(new Dorf(xneu, yneu, siedler.size()));
+						else 
+							insel.setDorf(new Dorf(xneu, yneu));
 						zerstoereSchiff();
 					} catch (IllegalAccessException e) {
 						// Siedler zum Dorf hinzufuegen

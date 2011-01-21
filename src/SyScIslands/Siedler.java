@@ -122,15 +122,15 @@ public class Siedler extends Bug {
 				dorf.erhoeheNahrungUm(karte.bauerErtrag);
 				break;
 			case BERUF_JAEGER:
-				ertrag = dorf.getInsel().curWild < karte.jaegerErtrag ? dorf
-						.getInsel().curWild : karte.jaegerErtrag;
-				dorf.getInsel().curWild -= ertrag;
+				int tmpWild = dorf.getInsel().getWild();
+				ertrag = tmpWild < karte.jaegerErtrag ? tmpWild : karte.jaegerErtrag;
+				dorf.getInsel().verringereWild(ertrag);
 				dorf.erhoeheNahrungUm(ertrag);
 				break;
 			case BERUF_HOLZFAELLER:
-				ertrag = dorf.getInsel().curHolz < karte.holzfaellerErtrag ? dorf
-						.getInsel().curHolz : karte.holzfaellerErtrag;
-				dorf.getInsel().curHolz -= ertrag;
+				int tmpHolz = dorf.getInsel().getHolz();
+				ertrag = tmpHolz < karte.holzfaellerErtrag ? tmpHolz : karte.holzfaellerErtrag;
+				dorf.getInsel().verringereHolz(ertrag);
 				dorf.erhoeheHolzUm(ertrag);
 				break;
 			case BERUF_HAFENBAUER:

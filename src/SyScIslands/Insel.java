@@ -6,8 +6,8 @@ public class Insel extends Swarm {
 	private static int autoid = 0;
 	private boolean init = true;
 
-	public int curHolz = 0;
-	public int curWild = 0;
+	private int curHolz = 0;
+	private int curWild = 0;
 	public boolean wasser = false;
 
 	public int holzMax = 1;
@@ -26,6 +26,10 @@ public class Insel extends Swarm {
 	/** Insel Id */
 	int id;
 	int groesse = 0;
+	
+	/** Synchronisations Objekte */
+	private Object holzLock = new Object();
+	private Object wildLock = new Object();
 
 	public Insel(Karte karte) {
 		this.id = autoid++;
@@ -110,5 +114,57 @@ public class Insel extends Swarm {
 
 	public Dorf getDorf() {
 		return dorf;
+	}
+	
+	public int getHolz() {
+		int holz;
+		synchronized(holzLock) {
+			holz = curHolz;
+		}
+		return holz;
+	}
+	
+	public int getWild() {
+		int wild;
+		synchronized(wildLock) {
+			wild = curWild;
+		}
+		return wild;
+	}
+	
+	public void setHolz(int holz) {
+		synchronized(holzLock) {
+			curHolz = holz;
+		}
+	}
+	
+	public void setWild(int wild) {
+		synchronized(wildLock) {
+			curWild = wild;
+		}
+	}
+	
+	public void erhoeheHolz(int differenz) {
+		synchronized(holzLock) {
+			curHolz += differenz;
+		}
+	}
+	
+	public void verringereHolz(int differenz) {
+		synchronized(holzLock) {
+			curHolz -= differenz;
+		}
+	}
+	
+	public void erhoeheWild(int differenz) {
+		synchronized(wildLock) {
+			curWild += differenz;
+		}
+	}
+	
+	public void verringereWild(int differenz) {
+		synchronized(wildLock) {
+			curWild -= differenz;
+		}
 	}
 }
