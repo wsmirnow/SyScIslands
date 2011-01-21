@@ -16,12 +16,12 @@ public class Schiff extends Bug {
 	public Schiff() {
 		this.bauzeit = -1;
 		//setActive(true);
-		setActive(false);
+		setActive(true);
 	}
 
 	public Schiff(int bauzeit) {
 		this.bauzeit = bauzeit;
-		setActive(false);
+		setActive(true);
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class Schiff extends Bug {
 	}
 
 	public synchronized boolean stecheInSee(Dorf dorf) {
-		if (dorf == null || isActive())
+		if (dorf == null)
 			return false;
 		if (siedler.isEmpty()) {
 			for (int i = 0; i < 20; i++) {
