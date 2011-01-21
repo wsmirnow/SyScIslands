@@ -18,12 +18,10 @@ public class Schiff extends Bug {
 
 	public Schiff() {
 		this.bauzeit = -1;
-		setActive(true);
 	}
 
 	public Schiff(int bauzeit) {
 		this.bauzeit = bauzeit;
-		setActive(true);
 	}
 
 	@Override
@@ -56,7 +54,7 @@ public class Schiff extends Bug {
 
 				if (insel != null) {
 					try {
-						if (siedler != null)
+						if (siedler != null && !siedler.isEmpty())
 							insel.setDorf(new Dorf(xneu, yneu, siedler.size(), nahrung, holz));
 						else 
 							insel.setDorf(new Dorf(xneu, yneu));
