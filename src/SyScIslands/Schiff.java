@@ -81,7 +81,7 @@ public class Schiff extends Bug {
 		if (dorf == null)
 			return false;
 		if (siedler.isEmpty()) {
-			for (int i = 0; i < 20; i++) {
+			for (int i = 0; i < 10 && siedler.size() < 10; i++) {
 				Siedler s = dorf.getRandomSiedler();
 				if (s == null)
 					continue;

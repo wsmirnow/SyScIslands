@@ -27,8 +27,8 @@ public class Karte extends Grid {
 	public int schiffsbauerDauer = 50;
 
 	/** Berufsertrag */
-	public int bauerErtrag = 5; // pro Runde
-	public int jaegerErtrag = 3; // pro Runde
+	public int bauerErtrag = 15; // pro Runde
+	public int jaegerErtrag = 5; // pro Runde
 	public int holzfaellerErtrag = 25; // pro Runde
 	public int schiffsbauerVerbrauch = 1; // pro Zeitschritt
 	public int hafenbauerVerbrauch = 1; // pro Zeitschritt
