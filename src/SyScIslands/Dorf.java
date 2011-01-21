@@ -24,10 +24,14 @@ public class Dorf extends Swarm {
 	}
 
 	public Dorf(int xPos, int yPos, int siedlerAnz) {
+		this(xPos, yPos, siedlerAnz, siedlerAnz * 5, siedlerAnz * 5);
+	}
+	
+	public Dorf(int xPos, int yPos, int siedlerAnz, int nahrung, int holz) {
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.nahrung = 0;
-		this.holz = 0;
+		this.nahrung = nahrung;
+		this.holz = holz;
 		this.wasser = 0;
 		this.hafen = false;
 		this.schiffe = new LinkedList<Schiff>();

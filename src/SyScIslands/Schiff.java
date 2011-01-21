@@ -10,12 +10,14 @@ public class Schiff extends Bug {
 	java.util.Random rnd = new java.util.Random();
 	private Map<Integer, Integer> siedler = new HashMap<Integer, Integer>();
 	int faterInselId = -1;
+	
+	protected int nahrung = 0;
+	protected int holz = 0;
 
 	private int bauzeit;
 
 	public Schiff() {
 		this.bauzeit = -1;
-		//setActive(true);
 		setActive(true);
 	}
 
@@ -55,7 +57,7 @@ public class Schiff extends Bug {
 				if (insel != null) {
 					try {
 						if (siedler != null)
-							insel.setDorf(new Dorf(xneu, yneu, siedler.size()));
+							insel.setDorf(new Dorf(xneu, yneu, siedler.size(), nahrung, holz));
 						else 
 							insel.setDorf(new Dorf(xneu, yneu));
 						zerstoereSchiff();
@@ -86,15 +88,17 @@ public class Schiff extends Bug {
 				if (s == null)
 					continue;
 				int beruf = s.beruf;
-				if ((dorf.getKarte().nahrungsVerbrauch * 3) < dorf.getNahrung())
+				int nahrung = dorf.getKarte().nahrungsVerbrauch * dorf.getKarte().nahrungsKnappheitZeit;
+				if (nahrung < dorf.getNahrung()) {
 					dorf.verringereNahrung(dorf.getKarte().nahrungsVerbrauch * dorf.getKarte().nahrungsKnappheitZeit);
-				else continue;
-				
-				if ((dorf.getKarte().holzVerbrauch * 3) < dorf.getHolz())
+					this.nahrung += nahrung;
+				} else continue;
+				holz = (dorf.getKarte().holzVerbrauch * dorf.getKarte().holzKnappheitZeit);
+				if (holz < dorf.getHolz()) {
 					dorf.verringereHolz(dorf.getKarte().holzVerbrauch * dorf.getKarte().holzKnappheitZeit);
-				else continue;
+					this.holz += holz;
+				} else continue;
 				
-				dorf.verringereHolz(dorf.getKarte().holzVerbrauch * 3);
 				s.sterben();
 				Integer anz = siedler.get(beruf);
 				if (anz == null)
