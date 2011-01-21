@@ -58,8 +58,8 @@ public class Siedler extends Bug {
 				&& dorf.getHolz() > dorf.getKarte().holzVerbrauch * 2
 				&& dorf.getChildCount() < dorf.getInsel().groesse * 1) {
 
-			dorf.verringereNahrungUm(dorf.getKarte().nahrungsVerbrauch);
-			dorf.verringereHolzUm(dorf.getKarte().holzVerbrauch);
+			dorf.verringereNahrung(dorf.getKarte().nahrungsVerbrauch);
+			dorf.verringereHolz(dorf.getKarte().holzVerbrauch);
 			dorf.siedlerHinzufuegen(new Siedler());
 		}
 	}
@@ -73,7 +73,7 @@ public class Siedler extends Bug {
 			return;
 
 		if (dorf.getNahrung() - karte.nahrungsVerbrauch > 0) {
-			dorf.verringereNahrungUm(karte.nahrungsVerbrauch);
+			dorf.verringereNahrung(karte.nahrungsVerbrauch);
 			hungerSeit = 0;
 		} else {
 			// nicht genug Nahrung
@@ -82,7 +82,7 @@ public class Siedler extends Bug {
 		}
 
 		if (dorf.getHolz() - karte.holzVerbrauch > 0) {
-			dorf.verringereHolzUm(karte.holzVerbrauch);
+			dorf.verringereHolz(karte.holzVerbrauch);
 			holzFehltSeit = 0;
 		} else {
 			// nicht genug Holz
@@ -104,7 +104,7 @@ public class Siedler extends Bug {
 			switch (beruf) {
 			case BERUF_HAFENBAUER:
 				if (dorf.getHolz() >= karte.hafenbauerVerbrauch) {
-					dorf.verringereHolzUm(karte.hafenbauerVerbrauch);
+					dorf.verringereHolz(karte.hafenbauerVerbrauch);
 					amArbeiten--;
 				}
 				break;
@@ -119,19 +119,19 @@ public class Siedler extends Bug {
 			// fertig mit der arbeit
 			switch (beruf) {
 			case BERUF_BAUER:
-				dorf.erhoeheNahrungUm(karte.bauerErtrag);
+				dorf.erhoeheNahrung(karte.bauerErtrag);
 				break;
 			case BERUF_JAEGER:
 				int tmpWild = dorf.getInsel().getWild();
 				ertrag = tmpWild < karte.jaegerErtrag ? tmpWild : karte.jaegerErtrag;
 				dorf.getInsel().verringereWild(ertrag);
-				dorf.erhoeheNahrungUm(ertrag);
+				dorf.erhoeheNahrung(ertrag);
 				break;
 			case BERUF_HOLZFAELLER:
 				int tmpHolz = dorf.getInsel().getHolz();
 				ertrag = tmpHolz < karte.holzfaellerErtrag ? tmpHolz : karte.holzfaellerErtrag;
 				dorf.getInsel().verringereHolz(ertrag);
-				dorf.erhoeheHolzUm(ertrag);
+				dorf.erhoeheHolz(ertrag);
 				break;
 			case BERUF_HAFENBAUER:
 				dorf.hafen = true;
@@ -149,7 +149,10 @@ public class Siedler extends Bug {
 		int dauer = -1;
 		switch (beruf) {
 		case BERUF_BAUER:
-			dauer = karte.bauerDauer;
+			if (dorf.getInsel().wasser)
+				dauer = karte.bauerDauer;
+			else 
+				dauer = karte.bauerDauer * 2;
 			break;
 		case BERUF_JAEGER:
 			dauer = karte.jaegerDauer;
@@ -178,12 +181,11 @@ public class Siedler extends Bug {
 			return;
 		}
 
-		Insel insel = dorf.getInsel();
 		if (dauer < 0)
 			return;
 
 		// fange an zu arbeiten
-		amArbeiten = dauer + (int) (dauer * insel.zugaenglichkeit);
+		amArbeiten = dauer + (int) (dauer * dorf.getInsel().zugaenglichkeit);
 	}
 
 	public Dorf getDorf() {

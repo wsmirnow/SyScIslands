@@ -86,6 +86,15 @@ public class Schiff extends Bug {
 				if (s == null)
 					continue;
 				int beruf = s.beruf;
+				if ((dorf.getKarte().nahrungsVerbrauch * 3) < dorf.getNahrung())
+					dorf.verringereNahrung(dorf.getKarte().nahrungsVerbrauch * dorf.getKarte().nahrungsKnappheitZeit);
+				else continue;
+				
+				if ((dorf.getKarte().holzVerbrauch * 3) < dorf.getHolz())
+					dorf.verringereHolz(dorf.getKarte().holzVerbrauch * dorf.getKarte().holzKnappheitZeit);
+				else continue;
+				
+				dorf.verringereHolz(dorf.getKarte().holzVerbrauch * 3);
 				s.sterben();
 				Integer anz = siedler.get(beruf);
 				if (anz == null)

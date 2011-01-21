@@ -11,30 +11,30 @@ public class Karte extends Grid {
 	/** Ressourcen pro Feld */
 	public int holzMax = 5;
 	public int holzMin = 0;
-	public int holzReg = 2;
+	public int holzReg = 1;
 
 	public int wildMax = 5;
 	public int wildMin = 0;
-	public int wildReg = 2;
+	public int wildReg = 1;
 
 	public float Wasserwahrscheinlichkeit = 0.5f;
 
 	/** Berufsdauer */
-	public int bauerDauer = 21;
+	public int bauerDauer = 20;
 	public int jaegerDauer = 5;
 	public int holzfaellerDauer = 3;
 	public int hafenbauerDauer = 100;
 	public int schiffsbauerDauer = 50;
 
 	/** Berufsertrag */
-	public int bauerErtrag = 10; // pro Runde
-	public int jaegerErtrag = 5; // pro Runde
+	public int bauerErtrag = 5; // pro Runde
+	public int jaegerErtrag = 3; // pro Runde
 	public int holzfaellerErtrag = 25; // pro Runde
-	public int schiffsbauerVerbrauch = 2; // pro Zeitschritt
-	public int hafenbauerVerbrauch = 3; // pro Zeitschritt
+	public int schiffsbauerVerbrauch = 1; // pro Zeitschritt
+	public int hafenbauerVerbrauch = 1; // pro Zeitschritt
 
 	/** Verbrauch der Siedler pro Zeitschritt */
-	public int nahrungsVerbrauch = 2;
+	public int nahrungsVerbrauch = 5;
 	public int holzVerbrauch = 1;
 
 	/** Überlebenswerte der Siedler */

@@ -15,6 +15,9 @@ public class Dorf extends Swarm {
 	public List<Schiff> schiffe;
 	public int xPos, yPos;
 	public int schiffBauzeit;
+	
+	private Object nahrungLock = new Object();
+	private Object holzLock = new Object();
 
 	public Dorf(int xPos, int yPos) {
 		this(xPos, yPos, 10);
@@ -104,39 +107,59 @@ public class Dorf extends Swarm {
 			return null;
 	}
 
-	public synchronized int erhoeheHolzUm(int differenz) {
-		holz += differenz;
+	public int erhoeheHolz(int differenz) {
+		synchronized(holzLock) {
+			holz += differenz;
+		}
 		return holz;
 	}
 
-	public synchronized int verringereHolzUm(int differenz) {
-		holz -= differenz;
+	public int verringereHolz(int differenz) {
+		synchronized(holzLock) {
+			holz -= differenz;
+		}
 		return holz;
 	}
 
-	public synchronized void setHolz(int holz) {
-		this.holz = holz;
+	public void setHolz(int holz) {
+		synchronized(holzLock) {
+			this.holz = holz;
+		}
 	}
 
-	public synchronized int getHolz() {
+	public int getHolz() {
+		int holz;
+		synchronized (holzLock) {
+			holz = this.holz;
+		}
 		return holz;
 	}
 
-	public synchronized int erhoeheNahrungUm(int differenz) {
-		nahrung += differenz;
+	public int erhoeheNahrung(int differenz) {
+		synchronized(nahrungLock) {
+			nahrung += differenz;
+		}
 		return nahrung;
 	}
 
-	public synchronized int verringereNahrungUm(int differenz) {
-		nahrung -= differenz;
+	public int verringereNahrung(int differenz) {
+		synchronized(nahrungLock) {
+			nahrung -= differenz;
+		}
 		return nahrung;
 	}
 
-	public synchronized void setNahrung(int nahrung) {
-		this.nahrung = nahrung;
+	public void setNahrung(int nahrung) {
+		synchronized(nahrungLock) {
+			this.nahrung = nahrung;
+		}
 	}
 
 	public synchronized int getNahrung() {
+		int nahrung;
+		synchronized(nahrungLock) {
+			nahrung = this.nahrung;
+		}
 		return nahrung;
 	}
 }
