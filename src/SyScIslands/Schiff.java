@@ -28,10 +28,9 @@ public class Schiff extends Bug {
 
 	@Override
 	public void action() {
-		// Fahre
 		if (this.getTop().getTime() == 0) {
 			if (this.z != 0) {
-				// Schiffe agieren nur auf der zweiten Ebene
+				// Schiffe agieren nur auf der ersten Ebene
 				this.leave();
 			}
 		} else {
@@ -51,8 +50,10 @@ public class Schiff extends Bug {
 				Insel insel = land.insel;
 
 				// wenn an der erbaungsinsel angekommen
-				if (faterInselId >= 0 && insel.id == faterInselId)
+				if (faterInselId >= 0 && insel.id == faterInselId) {
 					moveBug(xneu, yneu, z);
+					return;
+				}
 
 				if (insel != null) {
 					try {
@@ -70,6 +71,7 @@ public class Schiff extends Bug {
 							return;
 						for (Integer s : this.siedler.keySet())
 							insel.dorf.siedlerHinzufuegen(new Siedler(s));
+						zerstoereSchiff();
 					}
 				}
 			} else {
@@ -91,14 +93,12 @@ public class Schiff extends Bug {
 				if (s == null)
 					continue;
 				int beruf = s.beruf;
+				int holz = (dorf.getKarte().holzVerbrauch * dorf.getKarte().holzKnappheitZeit);
 				int nahrung = dorf.getKarte().nahrungsVerbrauch * dorf.getKarte().nahrungsKnappheitZeit;
-				if (nahrung < dorf.getNahrung()) {
+				if (nahrung < dorf.getNahrung() && holz < dorf.getHolz()) {
 					dorf.verringereNahrung(dorf.getKarte().nahrungsVerbrauch * dorf.getKarte().nahrungsKnappheitZeit);
-					this.nahrung += nahrung;
-				} else continue;
-				holz = (dorf.getKarte().holzVerbrauch * dorf.getKarte().holzKnappheitZeit);
-				if (holz < dorf.getHolz()) {
 					dorf.verringereHolz(dorf.getKarte().holzVerbrauch * dorf.getKarte().holzKnappheitZeit);
+					this.nahrung += nahrung;
 					this.holz += holz;
 				} else continue;
 				
