@@ -87,7 +87,7 @@ public class Schiff extends Bug {
 	public synchronized boolean stecheInSee(Dorf dorf) {
 		if (dorf == null)
 			return false;
-		if (dorf.schiffe.size() < 5 && siedler.isEmpty()) {
+		if (dorf.schiffe.size() < dorf.getKarte().maxSchiffeProInsel && siedler.isEmpty()) {
 			for (int i = 0; i < 10 && siedler.size() < 10; i++) {
 				Siedler s = dorf.getRandomSiedler();
 				if (s == null)

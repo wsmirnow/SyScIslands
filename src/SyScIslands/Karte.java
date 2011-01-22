@@ -40,6 +40,9 @@ public class Karte extends Grid {
 	/** Überlebenswerte der Siedler */
 	public int nahrungsKnappheitZeit = 5;
 	public int holzKnappheitZeit = 15;
+	
+	public int maxSchiffeProInsel = 5;
+	public float wildSiedlerProportion = 2.0f; // ab x Wild pro Siedler wird Nahrung vom Dorf abgezogen 
 
 	protected List<Insel> inseln = new LinkedList<Insel>();
 

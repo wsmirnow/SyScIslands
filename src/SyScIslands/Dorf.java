@@ -47,10 +47,18 @@ public class Dorf extends Swarm {
 
 	@Override
 	public void action() {
+		Insel insel = getInsel();
+		if (insel == null) return;
 		if (getAnzahlSiedler() == 0) {
-			Insel insel = getInsel();
-			if (insel != null)
-				insel.entferneDorf();
+			insel.entferneDorf();
+			return;
+		}
+		int wild = insel.getWild();
+		int inselGroesse = insel.getGroesse();
+		int siedlerAnz = getAnzahlSiedler();
+		if ((float)((float)(wild / inselGroesse) / (float)siedlerAnz) > getKarte().wildSiedlerProportion) {
+			if (verringereNahrung(wild) < 0)
+				setNahrung(0);
 		}
 	}
 
