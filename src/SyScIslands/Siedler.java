@@ -108,6 +108,8 @@ public class Siedler extends Bug {
 					amArbeiten--;
 				}
 				break;
+			case BERUF_SCHIFFSBAUER:
+				if (dorf.hafen) amArbeiten--;
 			default:
 				amArbeiten--;
 			}

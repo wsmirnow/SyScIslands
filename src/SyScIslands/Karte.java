@@ -23,7 +23,7 @@ public class Karte extends Grid {
 	public int bauerDauer = 20;
 	public int jaegerDauer = 5;
 	public int holzfaellerDauer = 3;
-	public int hafenbauerDauer = 100;
+	public int hafenbauerDauer = 70;
 	public int schiffsbauerDauer = 50;
 
 	/** Berufsertrag */
