@@ -109,7 +109,10 @@ public class Siedler extends Bug {
 				}
 				break;
 			case BERUF_SCHIFFSBAUER:
-				if (dorf.hafen) amArbeiten--;
+				if (dorf.hafen && dorf.getHolz() > karte.schiffsbauerVerbrauch)  {
+					dorf.verringereHolz(karte.schiffsbauerVerbrauch);
+					amArbeiten--;
+				}
 			default:
 				amArbeiten--;
 			}
@@ -167,17 +170,6 @@ public class Siedler extends Bug {
 			break;
 		case BERUF_SCHIFFSBAUER:
 			dauer = karte.schiffsbauerDauer;
-
-			/*
-			 * if (getSchiff() == null) setSchiff(new Schiff((int)
-			 * (karte.schiffsbauerDauer * getDorf()
-			 * .getInsel().zugaenglichkeit))); else { if (getDorf().getHolz() >
-			 * karte.schiffsbauerVerbrauch) {
-			 * getDorf().verringereHolzUm(karte.schiffsbauerVerbrauch); if
-			 * (getSchiff().verringereBauzeit(1) < 1) { if (getDorf().hafen &&
-			 * getSchiff().stecheInSee(getDorf())) { setSchiff(null); } } } }
-			 * dauer = Integer.MIN_VALUE;
-			 */
 			break;
 		default:
 			return;
