@@ -111,7 +111,6 @@ public class Schiff extends Bug {
 		}
 		if (siedler.isEmpty()
 				|| dorf.getKarte().getBug(dorf.xPos, dorf.yPos, 0) instanceof Schiff) {
-			// return false;
 			setActive(false);
 			return false;
 		}
