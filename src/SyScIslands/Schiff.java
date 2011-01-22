@@ -50,7 +50,7 @@ public class Schiff extends Bug {
 				Insel insel = land.insel;
 
 				// wenn an der erbaungsinsel angekommen
-				if (faterInselId >= 0 && insel.id == faterInselId) {
+				if (faterInselId >= 0 && insel.id == faterInselId && insel.getDorf() != null) {
 					moveBug(xneu, yneu, z);
 					return;
 				}

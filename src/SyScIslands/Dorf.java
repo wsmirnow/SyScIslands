@@ -10,11 +10,9 @@ public class Dorf extends Swarm {
 
 	private int nahrung;
 	private int holz;
-	public int wasser;
 	public boolean hafen;
 	public List<Schiff> schiffe;
 	public int xPos, yPos;
-	public int schiffBauzeit;
 	
 	private Object nahrungLock = new Object();
 	private Object holzLock = new Object();
@@ -32,7 +30,6 @@ public class Dorf extends Swarm {
 		this.yPos = yPos;
 		this.nahrung = nahrung;
 		this.holz = holz;
-		this.wasser = 0;
 		this.hafen = false;
 		this.schiffe = new LinkedList<Schiff>();
 		for (int i = 0; i < siedlerAnz; i++) {
@@ -49,13 +46,13 @@ public class Dorf extends Swarm {
 	public void action() {
 		Insel insel = getInsel();
 		if (insel == null) return;
-		if (getAnzahlSiedler() == 0) {
+		int siedlerAnz = getAnzahlSiedler();
+		if (siedlerAnz <= 0) {
 			insel.entferneDorf();
 			return;
 		}
 		int wild = insel.getWild();
 		int inselGroesse = insel.getGroesse();
-		int siedlerAnz = getAnzahlSiedler();
 		if ((float)((float)(wild / inselGroesse) / (float)siedlerAnz) > getKarte().wildSiedlerProportion) {
 			if (verringereNahrung(wild) < 0)
 				setNahrung(0);
