@@ -24,5 +24,4 @@ public class InselWildChart extends Chart {
 			lineTo("Insel "+inselId+" Wild", Chart.TYPE_LINE, getTop().getTime(), insel.getWild());
 		}
 	}
-
 }

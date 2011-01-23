@@ -1,0 +1,72 @@
+Insel:
+	-Rohstoffe
+		-Holzvorkommen (holzMin..holzMax)
+			-Regeneration (holzReg*Inselgroesse)
+		-Wildvorkommen (wildMin..wildMax)
+			-Regeneration (wildReg*InselGroesse)
+		-Wasservorkommen (ja/nein)
+	-Zugaenglichkeit (0.0 .. 1.0)
+	-Dorf (0..1)
+	
+Dorf: 
+	-Rohstoffe
+		-Nahrung
+		-Holz
+	-Hafen (ja/nein)
+	-Siedler (1..Inselgroesse)
+		-Max Siedler können durch den Zulauf an Schiffen ueberschritten werden
+
+Schiff:
+	-transportiert Siedler (1..10)
+	-transportiert Rohstoffe (Nahrung, Holz)
+	-Besetzung:
+		-Nahrung: (Siedler täglicher Nahrungsverbrauch * Nahrungsknappheitszeit) pro enthaltenen Siedler
+		-Holz: (Siedler täglicher Holzverbrauch * Holzknappheitszeit) pro enthaltenen Siedler
+	-merkt sich das Ausgangsdorf
+	-erforscht die Welt nach neuen Inseln:
+		-ist Insel == Vater-Insel:
+			-ja: ist die Siedlung (auf der Insel) die Ausagangssiedlung
+				-ja: fahre weiter
+				-nein: ausladen (Siedler, Rohstoffe)
+			-nein: gibt es dort schon ein Dorf:
+				-ja: ausladen (Siedler, Rohstoffe)
+				-nein: gründe neue Siedlung (Auslahden impliziert)
+
+Siedler:
+	-verbrauchen Resourcen (vom Dorf):
+		-Nahrung (2/Zeitschritt)
+			-ueberleben einige Zeitschritte ohne Nahrung (nahrungsKnappheitZeit)
+		-Holz (1/Zeitschritt)
+			-ueberleben einige Zeitschritte ohne Holz (holzKnappheitZeit)
+	-ueben Berufe aus:
+		-Bauer
+		-Jaeger
+		-Holzfaeller
+		-Hafenbauer
+		-Schiffsbauer
+	-reproduzieren sich
+		-erzeugen neuen Siedler (im eigenen Dorf)
+		-Vorraussetzungen:
+			-min 1 freies Landfeld (Anzahl Siedler im Dorf darf die Inselgroesse nicht ueberschreiten)
+			-min genug Nahrung fuer 2 Zeitschritte im Dorf vorhanden
+			-min genug Holz fuer 2 Zeitschritte im Dorf vorhanden
+
+Bauer:
+	
+Jaeger:
+
+Holzfaeller:
+			
+Hafenbauer:
+	-erbaut Hafen und wartet ihn
+	-erbaungsdauer (50 Zeitschritte)
+	-holz verbrauch (3/Zeitschritt)
+	-kann nur arbeiten, wenn im Dorf genug Resourcen verfügbar sind
+
+Schiffsbauer:
+	-erbaut Schiffe
+	-erbaungsdauer (25 Zeitschritte)
+	-holzverbrauch (2/Zeitschritt)
+	-kann nur arbeiten, wenn ein Hafen besteht und genug Resourcen im Dorf sind
+	
+

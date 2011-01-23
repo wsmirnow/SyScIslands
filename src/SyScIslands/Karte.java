@@ -13,36 +13,36 @@ public class Karte extends Grid {
 	public int holzMin = 0;
 	public int holzReg = 1;
 
-	public int wildMax = 5;
+	public int wildMax = 10;
 	public int wildMin = 0;
 	public int wildReg = 1;
 
-	public float Wasserwahrscheinlichkeit = 0.5f;
+	public float Wasserwahrscheinlichkeit = 0.3f;
 
 	/** Berufsdauer */
-	public int bauerDauer = 20;
+	public int bauerDauer = 15;
 	public int jaegerDauer = 5;
 	public int holzfaellerDauer = 3;
-	public int hafenbauerDauer = 70;
-	public int schiffsbauerDauer = 50;
+	public int hafenbauerDauer = 50;
+	public int schiffsbauerDauer = 25;
 
 	/** Berufsertrag */
-	public int bauerErtrag = 15; // pro Runde
-	public int jaegerErtrag = 5; // pro Runde
-	public int holzfaellerErtrag = 25; // pro Runde
-	public int schiffsbauerVerbrauch = 1; // pro Zeitschritt
-	public int hafenbauerVerbrauch = 1; // pro Zeitschritt
+	public int bauerErtrag = 50; // pro Runde
+	public int jaegerErtrag = 20; // pro Runde
+	public int holzfaellerErtrag = 10; // pro Runde
+	public int hafenbauerVerbrauch = 3; // pro Zeitschritt
+	public int schiffsbauerVerbrauch = 2; // pro Zeitschritt
 
 	/** Verbrauch der Siedler pro Zeitschritt */
-	public int nahrungsVerbrauch = 5;
+	public int nahrungsVerbrauch = 2;
 	public int holzVerbrauch = 1;
 
 	/** Überlebenswerte der Siedler */
-	public int nahrungsKnappheitZeit = 5;
+	public int nahrungsKnappheitZeit = 10;
 	public int holzKnappheitZeit = 15;
 	
 	public int maxSchiffeProInsel = 5;
-	public float wildSiedlerProportion = 2.0f; // ab x Wild pro Siedler wird Nahrung vom Dorf abgezogen 
+	public float wildSiedlerProportion = 5.0f; // ab x Wild pro Siedler wird Nahrung vom Dorf abgezogen 
 
 	protected List<Insel> inseln = new LinkedList<Insel>();
 
