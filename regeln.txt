@@ -34,46 +34,45 @@ Schiff:
 
 Siedler:
 	-verbrauchen Resourcen (vom Dorf):
-		-Nahrung (2/Zeitschritt)
+		-Nahrung (nahrungsVerbrauch [2] Nahrung/Zeitschritt)
 			-ueberleben einige Zeitschritte ohne Nahrung (nahrungsKnappheitZeit)
-		-Holz (1/Zeitschritt)
+		-Holz (holzverbrauch [1] Holz/Zeitschritt)
 			-ueberleben einige Zeitschritte ohne Holz (holzKnappheitZeit)
 	-ueben Berufe aus:
-		-Bauer
-		-Jaeger
-		-Holzfaeller
-		-Hafenbauer
-		-Schiffsbauer
+		-Berufe: (Bauer, Jaeger, Holzfaeller, Hafenbauer, Schiffsbauer)
 	-reproduzieren sich
 		-erzeugen neuen Siedler (im eigenen Dorf)
 		-Vorraussetzungen:
 			-min 1 freies Landfeld (Anzahl Siedler im Dorf darf die Inselgroesse nicht ueberschreiten)
 			-min genug Nahrung fuer 2 Zeitschritte im Dorf vorhanden
 			-min genug Holz fuer 2 Zeitschritte im Dorf vorhanden
+		-Verbrauch: 
+			-Nahrung (nahrungsVerbrauch)
+			-Holz (holzVerbrauch)
 
 Bauer:
-	-erzeugt Nahrung
+	-baut Nahrung an
 		-anbauDauer (bauerDauer [15] Zeitschritte)
 			-abhaengig von:
 				-Zugaenglichkeit der Insel (Anbaudauer * Zugaenglichkeit)
 				-Wasservorkommen der Insel 
 					-kein Wasservorkommen: (Anbaudauer * 2)
-		-Ertrag (bauerErtrag [50] pro Anbaudauer)
+		-Ertrag (bauerErtrag [50] Nahrung/Anbaudauer)
 
 Jaeger:
-	-erzeugt Nahrung
+	-jagd Wild und erzeugt daraus Nahrung
 	-Vorraussetzungen:
 		-Wild auf der Insel
-	-Ertrag (jaegerErtrag [20] pro Jagddauer)
-		-kann nacht mehr "abbauen" wie auf der Insel Wild gibt
+	-Ertrag (jaegerErtrag [20] Nahrung/Jagddauer)
+		-kann nicht mehr jagen wie Wild auf der Insel
 	-Jagddauer (jaegerDauer [5] Zeitschritte)
 		-abhaengig von der Zugaenglichkeit der Insel (Jagddauer * Zugaenglichkeit)
 
 Holzfaeller:
-	-erzeuugt Holz
+	-baut Holz ab
 	-Vorraussetzungen:
 		-Holz auf der Insel
-	-Ertrag (holzfaellerErtrag [10] pro Abbaudauer)
+	-Ertrag (holzfaellerErtrag [10] Holz/Abbaudauer)
 		-kann nicht mehr abbauen wie Holz auf der Insel
 	-Abbaudauer (holzfaellerDauer [3] Zeitschritte)
 		-abhaengig von Zugaenglichkeit der Insel (Abbaudauer * Zugaenglichkeit)
@@ -83,13 +82,15 @@ Hafenbauer:
 	-Erbaungsdauer (hafenbauerDauer [50] Zeitschritte)
 		-abhaengig von der Zugaenglichkeit der Insel (Erbaungsdauer * Zugaenglichkeit)
 	-Holz Verbrauch (hafenbauerVerbrauch [3] Holz/Zeitschritt)
-	-kann nur arbeiten, wenn im Dorf genug Resourcen verfügbar sind
+	-Vorraussetzung:
+		-genug Holz im Dorf
 
 Schiffsbauer:
 	-erbaut Schiffe
 	-Erbaungsdauer (schiffsbauerDauer [25] Zeitschritte)
 		-abhaengig von der Zugaenglichkeit der Insel (Erbaungsdauer * Zugaenglichkeit)
-	-holzverbrauch (schiffsbauerVerbrauch [2] Holz/Zeitschritt)
-	-kann nur arbeiten, wenn ein Hafen besteht und genug Holz im Dorf ist
+	-Holzverbrauch (schiffsbauerVerbrauch [2] Holz/Zeitschritt)
+	-Vorraussetzung:
+		-genug Holz im Dorf
 	
 
